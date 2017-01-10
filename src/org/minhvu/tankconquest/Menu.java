@@ -24,17 +24,17 @@ public class Menu
 	
 	public void paint(Graphics2D g2d)
 	{
-		Font titlefont = new Font("arial", Font.BOLD, 200);
-		Font subtitlefont = new Font("arial", Font.BOLD, 300);
+		Font titlefont = new Font("calibri", Font.BOLD, 525);
+		Font subtitlefont = new Font("calibri", Font.BOLD, 300);
 		
 		g2d.setFont(titlefont);
 		g2d.setColor(Color.WHITE);
-		g2d.drawString("TANK CONQUEST", (int) ((Game.getInstance().getWidth() - g2d.getFontMetrics().stringWidth("TANK CONQUEST")) / 2), 400);
+		g2d.drawString("TANK", (int) ((Game.getInstance().getWidth() - g2d.getFontMetrics().stringWidth("TANK")) / 2), 400);
 		
 		g2d.setFont(subtitlefont);
-		g2d.drawString("CONQUEST", (int) ((Game.getInstance().getWidth() - g2d.getFontMetrics().stringWidth("CONQUEST")) / 2), 665);
+		g2d.drawString("CONQUEST", (int) ((Game.getInstance().getWidth() - g2d.getFontMetrics().stringWidth("CONQUEST")) / 2), 645);
 
-		Font buttonfont = new Font("arial", Font.BOLD, 100);
+		Font buttonfont = new Font("calibri", Font.BOLD, 100);
 		g2d.setFont(buttonfont);
 		
 		if (Game.getInstance().getState().equals(Game.STATE.MENU))
@@ -56,10 +56,10 @@ public class Menu
 		
 		else if (Game.getInstance().getState().equals(Game.STATE.HELP))
 		{
-			Font helpfont = new Font("arial", Font.BOLD, 20);
+			Font helpfont = new Font("calibri", Font.PLAIN, 20);
 			
 			String helptextad = "Movement: Arrow Keys To Move";
-			String helptextlr = "Space: Fires Missile";
+			String helptextlr = "Space: Fires Bullet";
 			String helpobjective = "Objective: Destroy Enemies, Stay Alive";
 			
 			g2d.setColor(Color.WHITE);

@@ -18,9 +18,9 @@ public class End
 	
 	public End()
 	{
-		gameover = new Font("arial", Font.BOLD, 300);
-		textfont = new Font("arial", Font.BOLD, 100);
-		buttonfont = new Font("arial", Font.BOLD, 100);
+		gameover = new Font("calibri", Font.BOLD, 300);
+		textfont = new Font("calibri", Font.BOLD, 100);
+		buttonfont = new Font("calibri", Font.BOLD, 100);
 		
 		playbutton = new Rectangle(250, 700, 600, 100);
 		quitbutton = new Rectangle(Game.getInstance().getWidth() - 850, 700, 600, 100);
