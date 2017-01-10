@@ -9,9 +9,23 @@ import java.awt.image.BufferedImage;
 
 public class Player
 {
-	private static BufferedImage image = Sprite.getSprite(0, 1, 84);
+	private static BufferedImage[] moving =
+	{
+		Sprite.getSprite(1, 0, 84),
+		Sprite.getSprite(2, 0, 84),
+		Sprite.getSprite(3, 0, 84),
+		Sprite.getSprite(4, 0, 84),
+		Sprite.getSprite(5, 0, 84),
+		Sprite.getSprite(6, 0, 84),
+		Sprite.getSprite(7, 0, 84),
+		Sprite.getSprite(0, 1, 84)
+	};
+	
+	private Animation movement;
 	
 	private Point location;
+	private Dimension dimension;
+	
 	private int speed;
 
 	private boolean uppressed;
@@ -19,20 +33,32 @@ public class Player
 	private boolean leftpressed;
 	private boolean rightpressed;
 	
+	private double rotation;
+	private double degrees;
+	
 	public Player()
 	{
-		location = new Point((Game.getInstance().getWidth() - image.getWidth(Game.getInstance())) / 2, Game.getInstance().getHeight() - 200);
-		speed = 10;
+		movement = new Animation(moving, 10);
+		
+		location = new Point(700, 700);
+		dimension = new Dimension(84, 84);
+		
+		speed = 5;
 		
 		uppressed = false;
 		downpressed = false;
 		leftpressed = false;
 		rightpressed = false;
+		
+		rotation = 0;
+		degrees = 2;
 	}
 	
 	public void paint(Graphics2D g2d)
 	{
-		g2d.drawImage(image, location.x, location.y, Game.getInstance());
+		g2d.rotate(Math.toRadians(rotation), location.x + dimension.width / 2, location.y + dimension.height / 2);
+		g2d.drawImage(movement.getSprite(), location.x, location.y, Game.getInstance());
+		g2d.rotate(Math.toRadians(-rotation), location.x + dimension.width / 2, location.y + dimension.height / 2);
 	}
 	
 	public void move()
@@ -47,7 +73,7 @@ public class Player
 		
 		if (downpressed)
 		{
-			if (location.y + speed < Game.getInstance().getHeight() - image.getHeight(Game.getInstance()))
+			if (location.y + speed < Game.getInstance().getHeight() - dimension.height)
 			{
 				location.y += speed;
 			}
@@ -57,15 +83,17 @@ public class Player
 		{
 			if (location.x - speed > 0)
 			{
-				location.x -= speed;
+				//location.x -= speed;
+				rotation -= degrees;
 			}
 		}
 		
 		if (rightpressed)
 		{
-			if (location.x + speed < Game.getInstance().getWidth() - image.getWidth(Game.getInstance()))
+			if (location.x + speed < Game.getInstance().getWidth() - dimension.width)
 			{
-				location.x += speed;
+				//location.x += speed;
+				rotation += degrees;
 			}
 		}
 	}
@@ -123,11 +151,11 @@ public class Player
 	
 	public Dimension getDimensions()
 	{
-		return new Dimension(image.getWidth(Game.getInstance()), image.getHeight(Game.getInstance()));
+		return dimension;
 	}
 	
 	public Rectangle getBounds()
 	{
-		return new Rectangle(location.x + 35, location.y + 55, 55, 80);
+		return new Rectangle(location, dimension);
 	}
 }

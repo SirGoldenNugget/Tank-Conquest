@@ -39,7 +39,6 @@ public class Game extends JPanel implements Runnable
 	private Score score;
 	private Player player;
 	
-	private final int firerate = 250;
 	private long timer = System.currentTimeMillis();
 	
 	public Game()
@@ -65,10 +64,7 @@ public class Game extends JPanel implements Runnable
 					
 					if (e.getKeyCode() == KeyEvent.VK_SPACE)
 					{
-						if (System.currentTimeMillis() - timer > firerate)
-						{
-							timer = System.currentTimeMillis();
-						}
+						
 					}
 				}
 			}
@@ -132,7 +128,7 @@ public class Game extends JPanel implements Runnable
 
 		//Sound.BACKGROUND.loop();
 		
-		JFrame frame = new JFrame("Space Fighters");
+		JFrame frame = new JFrame("Tank Conquest");
 		frame.add(this);
 		frame.setSize(1920, 1080);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
