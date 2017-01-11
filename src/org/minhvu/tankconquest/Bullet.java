@@ -5,10 +5,12 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-public class Bullet extends Sprite
+public class Bullet extends Sprite // TODO NEED TO FIX THE POSITIONING BUG AT THE BEGGINING.
 {
 	private static BufferedImage image = Sprite.getSprite(454, 202, 16, 16);
 
+	private static final int firerate = 500;
+	
 	private int speed;
 	private double range;
 	
@@ -16,6 +18,7 @@ public class Bullet extends Sprite
 	
 	private double angle;
 	private Point initial;
+	
 	
 	public Bullet()
 	{
@@ -58,5 +61,10 @@ public class Bullet extends Sprite
 	public boolean hasExploded()
 	{
 		return exploded;
+	}
+	
+	public static int getFireRate()
+	{
+		return firerate;
 	}
 }

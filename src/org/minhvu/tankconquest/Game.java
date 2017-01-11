@@ -66,9 +66,13 @@ public class Game extends JPanel implements Runnable
 				{
 					player.keyPressed(e);
 					
-					if (e.getKeyCode() == KeyEvent.VK_SPACE)
+					if (e.getKeyCode() == KeyEvent.VK_SPACE && System.currentTimeMillis() - timer > Bullet.getFireRate())
 					{
+						timer = System.currentTimeMillis();
+						
 						bullets.add(new Bullet());
+						
+						Sound.FIRE.play();
 					}
 				}
 			}
@@ -219,10 +223,7 @@ public class Game extends JPanel implements Runnable
 			for (int i = 0; i < bullets.size(); ++i)
 			{
 				bullets.get(i).move();
-			}
-			
-			for (int i = 0; i < bullets.size(); ++i)
-			{
+
 				if (bullets.get(i).hasExploded())
 				{
 					bullets.remove(i);
@@ -233,7 +234,6 @@ public class Game extends JPanel implements Runnable
 		repaint();
 	}
 
-	// Used For Painting/Rendering Images.
 	@Override
 	public void paint(Graphics g)
 	{
@@ -269,15 +269,11 @@ public class Game extends JPanel implements Runnable
 		
 	}
 
-	// Used When The Game Is Over.
 	public void end()
 	{
 		//Sound.BACKGROUND.stop();
 		Sound.GAMEOVER.play();
-		//JOptionPane.showMessageDialog(this, "Final Score: " + score.getScore(), "Game Over", JOptionPane.YES_NO_OPTION);
 		state = STATE.END;
-		
-		//System.exit(ABORT);
 	}
 	
 	public void restart()
@@ -288,8 +284,6 @@ public class Game extends JPanel implements Runnable
 		player = new Player();
 	}
 
-	// Getters For The Class Objects.
-	
 	public static Game getInstance()
 	{
 		return instance;
