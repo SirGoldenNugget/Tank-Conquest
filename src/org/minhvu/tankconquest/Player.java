@@ -33,8 +33,8 @@ public class Player
 	private boolean leftpressed;
 	private boolean rightpressed;
 	
+	private double angle;
 	private double rotation;
-	private double degrees;
 	
 	public Player()
 	{
@@ -43,22 +43,22 @@ public class Player
 		location = new Point(700, 700);
 		dimension = new Dimension(84, 84);
 		
-		speed = 5;
+		speed = 2;
 		
 		uppressed = false;
 		downpressed = false;
 		leftpressed = false;
 		rightpressed = false;
 		
-		rotation = 0;
-		degrees = 2;
+		angle = 90;
+		rotation = 2;
 	}
 	
 	public void paint(Graphics2D g2d)
 	{
-		g2d.rotate(Math.toRadians(rotation), location.x + dimension.width / 2, location.y + dimension.height / 2);
+		g2d.rotate(Math.toRadians(angle - 90), location.x + dimension.width / 2, location.y + dimension.height / 2);
 		g2d.drawImage(movement.getSprite(), location.x, location.y, Game.getInstance());
-		g2d.rotate(Math.toRadians(-rotation), location.x + dimension.width / 2, location.y + dimension.height / 2);
+		g2d.rotate(Math.toRadians(-(angle - 90)), location.x + dimension.width / 2, location.y + dimension.height / 2);
 	}
 	
 	public void move()
@@ -67,7 +67,8 @@ public class Player
 		{
 			if (location.y - speed > 0)
 			{
-				location.y -= speed;
+			    location.x -= Math.round(speed * Math.cos(Math.toRadians(angle)));
+			    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
 			}
 		}
 		
@@ -75,7 +76,8 @@ public class Player
 		{
 			if (location.y + speed < Game.getInstance().getHeight() - dimension.height)
 			{
-				location.y += speed;
+			    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
+			    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
 			}
 		}
 		
@@ -84,7 +86,7 @@ public class Player
 			if (location.x - speed > 0)
 			{
 				//location.x -= speed;
-				rotation -= degrees;
+				angle -= rotation;
 			}
 		}
 		
@@ -93,7 +95,7 @@ public class Player
 			if (location.x + speed < Game.getInstance().getWidth() - dimension.width)
 			{
 				//location.x += speed;
-				rotation += degrees;
+				angle += rotation;
 			}
 		}
 	}
@@ -103,21 +105,25 @@ public class Player
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
 			uppressed = false;
+			movement.stop();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		{
 			downpressed = false;
+			movement.stop();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
 			leftpressed = false;
+			movement.stop();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			rightpressed = false;
+			movement.stop();
 		}
 	}
 
@@ -126,21 +132,25 @@ public class Player
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
 			uppressed = true;
+			movement.start();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		{
 			downpressed = true;
+			movement.start();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
 			leftpressed = true;
+			movement.start();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			rightpressed = true;
+			movement.start();
 		}
 	}
 	
