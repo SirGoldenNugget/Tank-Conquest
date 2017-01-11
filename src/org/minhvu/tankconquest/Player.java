@@ -22,7 +22,8 @@ public class Player extends Sprite
 	
 	private Animation movement;
 	
-	private int speed;
+	private int forward;
+	private int reverse;
 
 	private boolean uppressed;
 	private boolean downpressed;
@@ -42,7 +43,8 @@ public class Player extends Sprite
 		location = new Point(700, 700);
 		dimension = new Dimension(84, 84);
 		
-		speed = 5;
+		forward = 5;
+		reverse = 3;
 		
 		uppressed = false;
 		downpressed = false;
@@ -55,45 +57,53 @@ public class Player extends Sprite
 	
 	public void paint(Graphics2D g2d)
 	{
-		g2d.rotate(Math.toRadians(angle - 90), location.x + dimension.width / 2, location.y + dimension.height / 2);
+		g2d.rotate(Math.toRadians(angle - 90), getBounds().getCenterX(), getBounds().getCenterY());
 		g2d.drawImage(movement.getSprite(), location.x, location.y, Game.getInstance());
-		g2d.rotate(Math.toRadians(-(angle - 90)), location.x + dimension.width / 2, location.y + dimension.height / 2);
+		g2d.rotate(Math.toRadians(-(angle - 90)), getBounds().getCenterX(), getBounds().getCenterY());
 	}
 	
 	public void move()
-	{
+	{	
 		if (uppressed)
 		{
-			if (location.y - speed > 0)
-			{
-			    location.x -= Math.round(speed * Math.cos(Math.toRadians(angle)));
-			    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
-			}
+		    location.x -= Math.round(forward * Math.cos(Math.toRadians(angle)));
+		    location.y -= Math.round(forward * Math.sin(Math.toRadians(angle)));
 		}
 		
 		if (downpressed)
 		{
-			if (location.y + speed < Game.getInstance().getHeight() - dimension.height)
-			{
-			    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
-			    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
-			}
+		    location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
+		    location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
+		}
+		
+		if (getBounds().getCenterX() - dimension.width / 2 < 0)
+		{
+			location.x = 0;
+		}
+		
+		if (getBounds().getCenterX() + dimension.width / 2 > Game.getInstance().getWidth())
+		{
+			location.x = Game.getInstance().getWidth() - dimension.width;
+		}
+		
+		if (getBounds().getCenterY() - dimension.height / 2 < 0)
+		{
+			location.y = 0;
+		}
+		
+		if (getBounds().getCenterY() + dimension.height / 2 > Game.getInstance().getHeight())
+		{
+			location.y = Game.getInstance().getHeight() - dimension.height;
 		}
 		
 		if (leftpressed)
 		{
-			if (location.x - speed > 0)
-			{
-				angle -= rotation;
-			}
+			angle -= rotation;
 		}
 		
 		if (rightpressed)
 		{
-			if (location.x + speed < Game.getInstance().getWidth() - dimension.width)
-			{
-				angle += rotation;
-			}
+			angle += rotation;
 		}
 		
 		if (uppressed || downpressed || leftpressed || rightpressed)
@@ -146,5 +156,10 @@ public class Player extends Sprite
 		{
 			rightpressed = true;
 		}
+	}
+	
+	public double getAngle()
+	{
+		return angle;
 	}
 }

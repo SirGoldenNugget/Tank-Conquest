@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,7 +39,9 @@ public class Game extends JPanel implements Runnable
 	private Menu menu;
 	private End end;
 	private Score score;
+	
 	private Player player;
+	private List<Bullet> bullets = new ArrayList<Bullet>();
 	
 	private long timer = System.currentTimeMillis();
 	
@@ -64,7 +68,7 @@ public class Game extends JPanel implements Runnable
 					
 					if (e.getKeyCode() == KeyEvent.VK_SPACE)
 					{
-						
+						bullets.add(new Bullet());
 					}
 				}
 			}
@@ -211,6 +215,19 @@ public class Game extends JPanel implements Runnable
 		if (state.equals(STATE.PLAY))
 		{
 			player.move();
+			
+			for (int i = 0; i < bullets.size(); ++i)
+			{
+				bullets.get(i).move();
+			}
+			
+			for (int i = 0; i < bullets.size(); ++i)
+			{
+				if (bullets.get(i).hasExploded())
+				{
+					bullets.remove(i);
+				}
+			}
 		}
 		
 		repaint();
@@ -226,7 +243,12 @@ public class Game extends JPanel implements Runnable
 		super.paint(g2d);
 		
 		if (state.equals(STATE.PLAY) || state.equals(STATE.END))
-		{	
+		{
+			for (int i = 0; i < bullets.size(); ++i)
+			{
+				bullets.get(i).paint(g2d);
+			}
+			
 			player.paint(g2d);
 			
 			if (state.equals(STATE.END))
