@@ -3,11 +3,10 @@ package org.minhvu.tankconquest;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class Player
+public class Player extends Sprite
 {
 	private static BufferedImage[] moving =
 	{
@@ -23,9 +22,6 @@ public class Player
 	
 	private Animation movement;
 	
-	private Point location;
-	private Dimension dimension;
-	
 	private int speed;
 
 	private boolean uppressed;
@@ -38,12 +34,15 @@ public class Player
 	
 	public Player()
 	{
+		super();
+		
 		movement = new Animation(moving, 10);
+		movement.start();
 		
 		location = new Point(700, 700);
 		dimension = new Dimension(84, 84);
 		
-		speed = 2;
+		speed = 5;
 		
 		uppressed = false;
 		downpressed = false;
@@ -85,7 +84,6 @@ public class Player
 		{
 			if (location.x - speed > 0)
 			{
-				//location.x -= speed;
 				angle -= rotation;
 			}
 		}
@@ -94,9 +92,13 @@ public class Player
 		{
 			if (location.x + speed < Game.getInstance().getWidth() - dimension.width)
 			{
-				//location.x += speed;
 				angle += rotation;
 			}
+		}
+		
+		if (uppressed || downpressed || leftpressed || rightpressed)
+		{
+			movement.update();
 		}
 	}
 
@@ -105,25 +107,21 @@ public class Player
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
 			uppressed = false;
-			movement.stop();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		{
 			downpressed = false;
-			movement.stop();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
 			leftpressed = false;
-			movement.stop();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			rightpressed = false;
-			movement.stop();
 		}
 	}
 
@@ -132,40 +130,21 @@ public class Player
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
 			uppressed = true;
-			movement.start();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		{
 			downpressed = true;
-			movement.start();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
 			leftpressed = true;
-			movement.start();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			rightpressed = true;
-			movement.start();
 		}
-	}
-	
-	public Point getLocation()
-	{
-		return location;
-	}
-	
-	public Dimension getDimensions()
-	{
-		return dimension;
-	}
-	
-	public Rectangle getBounds()
-	{
-		return new Rectangle(location, dimension);
 	}
 }

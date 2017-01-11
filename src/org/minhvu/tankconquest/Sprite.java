@@ -1,5 +1,8 @@
 package org.minhvu.tankconquest;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -34,5 +37,23 @@ public class Sprite
 	public static BufferedImage getSprite(int x, int y, int size)
 	{
 		return spritesheet.getSubimage(x * size, y * size, size, size);
+	}
+	
+	protected Point location;
+	protected Dimension dimension;
+	
+	public Point getLocation()
+	{
+		return location;
+	}
+	
+	public Dimension getDimensions()
+	{
+		return dimension;
+	}
+	
+	public Rectangle getBounds()
+	{
+		return new Rectangle(location, dimension);
 	}
 }

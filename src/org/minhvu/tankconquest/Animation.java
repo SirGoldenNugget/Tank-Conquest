@@ -108,7 +108,6 @@ public class Animation
 				if (currentframe > totalframes - 1)
 				{
 					currentframe = 0;
-					stopped = true;
 				}
 				
 				else if (currentframe < 0)
@@ -117,10 +116,5 @@ public class Animation
 				}
 			}
 		}
-	}
-	
-	public boolean isStopped()
-	{
-		return stopped;
 	}
 }
