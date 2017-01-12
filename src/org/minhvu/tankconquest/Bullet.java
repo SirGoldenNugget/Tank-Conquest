@@ -5,19 +5,19 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-public class Bullet extends Sprite // TODO NEED TO FIX THE POSITIONING BUG AT THE BEGGINING.
+public class Bullet extends Sprite
 {
 	private static BufferedImage image = Sprite.getSprite(454, 202, 16, 16);
 
 	private static final int firerate = 500;
 	
 	private int speed;
-	private double range;
+	//private double range;
 	
 	private boolean exploded;
 	
 	private double angle;
-	private Point initial;
+	//private Point initial;
 	
 	
 	public Bullet()
@@ -29,12 +29,12 @@ public class Bullet extends Sprite // TODO NEED TO FIX THE POSITIONING BUG AT TH
 				(int) Math.round(Game.getInstance().getPlayer().getBounds().getCenterY() - dimension.height / 2));
 
 		speed = 15;
-		range = 1000;
+		//range = 1000;
 		
 		exploded = false;
 		
 		angle = Game.getInstance().getPlayer().getAngle();
-		initial = Game.getInstance().getPlayer().getLocation();
+		//initial = Game.getInstance().getPlayer().getLocation();
 	}
 	
 	public void move()
@@ -45,7 +45,10 @@ public class Bullet extends Sprite // TODO NEED TO FIX THE POSITIONING BUG AT TH
 		    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
 		}
 		
-		if (location.distance(initial) > range)
+		//if (location.distance(initial) > range) { exploded = true; }
+
+		if (location.x > Game.getInstance().getWidth() || location.x + dimension.width < 0
+				|| location.y > Game.getInstance().getHeight() || location.y + dimension.height < 0)
 		{
 			exploded = true;
 		}

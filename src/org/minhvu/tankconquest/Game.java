@@ -23,6 +23,7 @@ public class Game extends JPanel implements Runnable
 	}
 	
 	private static Game instance;
+	private static Sound sound;
 
 	private boolean running = false;
 	private Thread thread;
@@ -72,7 +73,9 @@ public class Game extends JPanel implements Runnable
 						
 						bullets.add(new Bullet());
 						
-						Sound.FIRE.play();
+						sound.FIRE.stop();
+						sound.FIRE.setFramePosition(0);
+						sound.FIRE.start();
 					}
 				}
 			}
@@ -148,6 +151,7 @@ public class Game extends JPanel implements Runnable
 		menu = new Menu();
 		end = new End();
 		score = new Score();
+		sound = new Sound();
 		player = new Player();
 		
 		start();
@@ -271,8 +275,7 @@ public class Game extends JPanel implements Runnable
 
 	public void end()
 	{
-		//Sound.BACKGROUND.stop();
-		Sound.GAMEOVER.play();
+		sound.GAMEOVER.play();
 		state = STATE.END;
 	}
 	

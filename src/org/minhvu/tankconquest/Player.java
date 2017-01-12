@@ -52,7 +52,7 @@ public class Player extends Sprite
 		rightpressed = false;
 		
 		angle = 90;
-		rotation = 2;
+		rotation = 1;
 	}
 	
 	public void paint(Graphics2D g2d)
