@@ -20,8 +20,12 @@ public class Bullet extends Sprite
 	//private Point initial;
 	
 	
-	public Bullet()
+	private Sprite sprite;
+	
+	public Bullet(Sprite sprite)
 	{
+		this.sprite = sprite;
+		
 		dimension = new Dimension(16, 16);
 
 		location = new Point(
@@ -35,6 +39,11 @@ public class Bullet extends Sprite
 		
 		angle = Game.getInstance().getPlayer().getAngle();
 		//initial = Game.getInstance().getPlayer().getLocation();
+		
+
+		Game.getInstance().getSound().FIRE.stop();
+		Game.getInstance().getSound().FIRE.setFramePosition(0);
+		Game.getInstance().getSound().FIRE.start();
 	}
 	
 	public void move()
@@ -46,6 +55,16 @@ public class Bullet extends Sprite
 		}
 		
 		//if (location.distance(initial) > range) { exploded = true; }
+
+		if (sprite instanceof Player)
+		{
+			
+		}
+		
+		if (sprite instanceof Enemy)
+		{
+			
+		}
 
 		if (location.x > Game.getInstance().getWidth() || location.x + dimension.width < 0
 				|| location.y > Game.getInstance().getHeight() || location.y + dimension.height < 0)

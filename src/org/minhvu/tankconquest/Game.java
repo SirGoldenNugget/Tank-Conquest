@@ -42,6 +42,7 @@ public class Game extends JPanel implements Runnable
 	private Score score;
 	
 	private Player player;
+	private List<Enemy> enemies = new ArrayList<Enemy>();
 	private List<Bullet> bullets = new ArrayList<Bullet>();
 	
 	private long timer = System.currentTimeMillis();
@@ -71,11 +72,7 @@ public class Game extends JPanel implements Runnable
 					{
 						timer = System.currentTimeMillis();
 						
-						bullets.add(new Bullet());
-						
-						sound.FIRE.stop();
-						sound.FIRE.setFramePosition(0);
-						sound.FIRE.start();
+						bullets.add(new Bullet(player));
 					}
 				}
 			}
@@ -135,7 +132,7 @@ public class Game extends JPanel implements Runnable
 		addMouseListener(mouselistener);
 		setFocusable(true);
 
-		Sprite.loadSprite("/spritesheet.png");
+		Sprite.loadSprite("/spritesheetnt.png");
 
 		//Sound.BACKGROUND.loop();
 		
@@ -153,6 +150,7 @@ public class Game extends JPanel implements Runnable
 		score = new Score();
 		sound = new Sound();
 		player = new Player();
+		enemies.add(new Enemy());
 		
 		start();
 	}
@@ -224,6 +222,11 @@ public class Game extends JPanel implements Runnable
 		{
 			player.move();
 			
+			for (int i = 0; i < enemies.size(); ++i)
+			{
+				enemies.get(i).move();
+			}
+			
 			for (int i = 0; i < bullets.size(); ++i)
 			{
 				bullets.get(i).move();
@@ -252,8 +255,13 @@ public class Game extends JPanel implements Runnable
 			{
 				bullets.get(i).paint(g2d);
 			}
+
+			for (int i = 0; i < enemies.size(); ++i)
+			{
+				enemies.get(i).paint(g2d);
+			}
 			
-			player.paint(g2d);
+			player.paint(g2d);			
 			
 			if (state.equals(STATE.END))
 			{
@@ -296,6 +304,11 @@ public class Game extends JPanel implements Runnable
 	{
 		return state;
 	}
+
+	public Sound getSound()
+	{
+		return sound;
+	}
 	
 	public Score getScore()
 	{
@@ -310,5 +323,10 @@ public class Game extends JPanel implements Runnable
 	public Player getPlayer()
 	{
 		return player;
+	}
+	
+	public List<Bullet> getBullets()
+	{
+		return bullets;
 	}
 }
