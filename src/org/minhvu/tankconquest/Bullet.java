@@ -29,15 +29,15 @@ public class Bullet extends Sprite
 		dimension = new Dimension(16, 16);
 
 		location = new Point(
-				(int) Math.round(Game.getInstance().getPlayer().getBounds().getCenterX() - dimension.width / 2),
-				(int) Math.round(Game.getInstance().getPlayer().getBounds().getCenterY() - dimension.height / 2));
+				(int) Math.round(sprite.getBounds().getCenterX() - dimension.width / 2),
+				(int) Math.round(sprite.getBounds().getCenterY() - dimension.height / 2));
 
 		speed = 15;
 		//range = 1000;
 		
 		exploded = false;
 		
-		angle = Game.getInstance().getPlayer().getAngle();
+		angle = sprite.getAngle();
 		//initial = Game.getInstance().getPlayer().getLocation();
 
 		Game.getInstance().getSound().FIRE.stop();
@@ -52,8 +52,6 @@ public class Bullet extends Sprite
 		    location.x -= Math.round(speed * Math.cos(Math.toRadians(angle)));
 		    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
 		}
-		
-		//if (location.distance(initial) > range) { exploded = true; }
 
 		if (sprite instanceof Player)
 		{	
@@ -61,7 +59,9 @@ public class Bullet extends Sprite
 			{
 				if (getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()))
 				{
+					exploded = true;
 					
+					Game.getInstance().getEnemies().remove(Game.getInstance().getEnemies().get(i));
 				}
 			}
 		}

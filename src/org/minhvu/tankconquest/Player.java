@@ -22,8 +22,11 @@ public class Player extends Sprite
 	
 	private Animation movement;
 	
+	private int speed;
 	private int forward;
 	private int reverse;
+	
+	private long movementtimer = System.currentTimeMillis();
 
 	private boolean uppressed;
 	private boolean downpressed;
@@ -33,7 +36,7 @@ public class Player extends Sprite
 	private double angle;
 	private double rotation;
 	
-	private long timer = System.currentTimeMillis();
+	private long bullettimer = System.currentTimeMillis();
 	
 	public Player()
 	{
@@ -46,7 +49,7 @@ public class Player extends Sprite
 		dimension = new Dimension(84, 84);
 		
 		forward = 5;
-		reverse = 3;
+		reverse = 2;
 		
 		uppressed = false;
 		downpressed = false;
@@ -68,8 +71,20 @@ public class Player extends Sprite
 	{	
 		if (uppressed)
 		{
-		    location.x -= Math.round(forward * Math.cos(Math.toRadians(angle)));
-		    location.y -= Math.round(forward * Math.sin(Math.toRadians(angle)));
+			if (speed < forward && System.currentTimeMillis() - movementtimer > 1000)
+			{
+				movementtimer = System.currentTimeMillis();
+				++speed;
+			}
+			
+		    location.x -= Math.round(speed * Math.cos(Math.toRadians(angle)));
+		    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
+		}
+		
+		else
+		{
+			movementtimer = System.currentTimeMillis();
+			speed = reverse;
 		}
 		
 		if (downpressed)
@@ -159,10 +174,10 @@ public class Player extends Sprite
 			rightpressed = true;
 		}
 		
-		if (e.getKeyCode() == KeyEvent.VK_SPACE && System.currentTimeMillis() - timer > Bullet.getFireRate())
+		if (e.getKeyCode() == KeyEvent.VK_SPACE && System.currentTimeMillis() - bullettimer > Bullet.getFireRate())
 		{
 			Game.getInstance().getBullets().add(new Bullet(this));
-			timer = System.currentTimeMillis();
+			bullettimer = System.currentTimeMillis();
 		}
 	}
 	

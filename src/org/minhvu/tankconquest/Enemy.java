@@ -33,8 +33,9 @@ public class Enemy extends Sprite
 	private boolean turn = false;
 	private boolean left = false;
 	
-	private double angle;
 	private double rotation;
+	
+	private long timer = System.currentTimeMillis();
 	
 	public Enemy()
 	{
@@ -155,7 +156,11 @@ public class Enemy extends Sprite
 	
 	public void fire()
 	{
-		
+		if (System.currentTimeMillis() - timer > Bullet.getFireRate())
+		{
+			timer = System.currentTimeMillis();
+			Game.getInstance().getBullets().add(new Bullet(this));
+		}
 	}
 	
 	private void turn()
@@ -171,10 +176,5 @@ public class Enemy extends Sprite
 				direction = true;
 			}
 		}, (int) (Math.random() * (maxrotation - minrotation)) + minrotation);
-	}
-	
-	public double getAngle()
-	{
-		return angle;
 	}
 }
