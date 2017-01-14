@@ -33,6 +33,8 @@ public class Player extends Sprite
 	private double angle;
 	private double rotation;
 	
+	private long timer = System.currentTimeMillis();
+	
 	public Player()
 	{
 		super();
@@ -155,6 +157,12 @@ public class Player extends Sprite
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			rightpressed = true;
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_SPACE && System.currentTimeMillis() - timer > Bullet.getFireRate())
+		{
+			Game.getInstance().getBullets().add(new Bullet(this));
+			timer = System.currentTimeMillis();
 		}
 	}
 	

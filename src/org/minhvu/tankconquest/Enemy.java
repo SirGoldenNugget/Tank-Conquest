@@ -153,6 +153,11 @@ public class Enemy extends Sprite
 		movement.update();
 	}
 	
+	public void fire()
+	{
+		
+	}
+	
 	private void turn()
 	{
 		direction = false;

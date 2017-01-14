@@ -56,12 +56,10 @@ public class Bullet extends Sprite
 		//if (location.distance(initial) > range) { exploded = true; }
 
 		if (sprite instanceof Player)
-		{
-			Player player = (Player) sprite;
-			
+		{	
 			for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
 			{
-				if (player.getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()))
+				if (getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()))
 				{
 					
 				}
@@ -70,7 +68,10 @@ public class Bullet extends Sprite
 		
 		else if (sprite instanceof Enemy)
 		{
-			
+			if (getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
+			{
+				Game.getInstance().end();
+			}
 		}
 
 		if (location.x > Game.getInstance().getWidth() || location.x + dimension.width < 0

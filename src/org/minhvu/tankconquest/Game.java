@@ -46,8 +46,6 @@ public class Game extends JPanel implements Runnable
 	private List<Enemy> enemies = new ArrayList<Enemy>();
 	private List<Bullet> bullets = new ArrayList<Bullet>();
 	
-	private long timer = System.currentTimeMillis();
-	
 	public Game()
 	{
 		instance = this;
@@ -68,13 +66,6 @@ public class Game extends JPanel implements Runnable
 				if (state.equals(STATE.PLAY))
 				{
 					player.keyPressed(e);
-					
-					if (e.getKeyCode() == KeyEvent.VK_SPACE && System.currentTimeMillis() - timer > Bullet.getFireRate())
-					{
-						timer = System.currentTimeMillis();
-						
-						bullets.add(new Bullet(player));
-					}
 				}
 			}
 
