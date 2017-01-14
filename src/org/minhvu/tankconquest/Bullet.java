@@ -19,7 +19,6 @@ public class Bullet extends Sprite
 	private double angle;
 	//private Point initial;
 	
-	
 	private Sprite sprite;
 	
 	public Bullet(Sprite sprite)

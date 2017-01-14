@@ -42,6 +42,8 @@ public class Game extends JPanel implements Runnable
 	private End end;
 	private Score score;
 	
+	private final int enemycount = 15;
+	
 	private Player player;
 	private List<Enemy> enemies = new ArrayList<Enemy>();
 	private List<Bullet> bullets = new ArrayList<Bullet>();
@@ -143,7 +145,11 @@ public class Game extends JPanel implements Runnable
 		sound = new Sound();
 		score = new Score();
 		player = new Player();
-		enemies.add(new Enemy());
+		
+		for (int i = 0; i < enemycount; ++i)
+		{
+			enemies.add(new Enemy());
+		}
 		
 		start();
 	}
@@ -242,11 +248,11 @@ public class Game extends JPanel implements Runnable
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		
 		super.paint(g2d);
+
+		map.paint(g2d);
 		
 		if (state.equals(STATE.PLAY) || state.equals(STATE.END))
-		{
-			map.paint(g2d);
-			
+		{	
 			for (int i = 0; i < bullets.size(); ++i)
 			{
 				bullets.get(i).paint(g2d);

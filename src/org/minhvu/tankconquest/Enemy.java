@@ -49,8 +49,8 @@ public class Enemy extends Sprite
 		direction = true;
 		maxrotation = 2500;
 		minrotation = 1000;
-		
-		location = new Point(600, 600);
+
+		location = new Point((int) (Math.random() * 1800), (int) (Math.random() * 900));
 		dimension = new Dimension(84, 84);
 		
 		forward = 2;
