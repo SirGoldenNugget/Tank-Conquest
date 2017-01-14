@@ -49,7 +49,7 @@ public class Enemy extends Sprite
 		maxrotation = 2500;
 		minrotation = 1000;
 		
-		location = new Point(700, 700);
+		location = new Point(600, 600);
 		dimension = new Dimension(84, 84);
 		
 		forward = 2;

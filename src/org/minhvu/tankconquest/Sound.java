@@ -1,7 +1,5 @@
 package org.minhvu.tankconquest;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,14 +11,18 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sound
 {
-	public final AudioClip GAMEOVER = Applet.newAudioClip(Sound.class.getResource("/gameover.wav"));
-	//public final AudioClip FIRE = Applet.newAudioClip(Sound.class.getResource("/fire.wav"));
-	
 	public Clip FIRE;
+	public Clip GAMEOVER;
 	
 	public Sound()
 	{
-		File file = new File("res/fire.wav");
+		GAMEOVER = getAudioClip("res/gameover.wav");
+		FIRE = getAudioClip("res/fire.wav");
+	}
+	
+	private Clip getAudioClip(String path)
+	{
+		File file = new File(path);
 		Clip clip = null;
 		
 		try
@@ -54,6 +56,6 @@ public class Sound
 			e.printStackTrace();
 		}
 		
-		FIRE = clip;
+		return clip;
 	}
 }

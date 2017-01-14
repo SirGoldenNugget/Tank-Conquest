@@ -23,7 +23,6 @@ public class Game extends JPanel implements Runnable
 	}
 	
 	private static Game instance;
-	private static Sound sound;
 
 	private boolean running = false;
 	private Thread thread;
@@ -38,6 +37,8 @@ public class Game extends JPanel implements Runnable
 	
 	private STATE state;
 	private Menu menu;
+	private Map map;
+	private Sound sound;
 	private End end;
 	private Score score;
 	
@@ -146,9 +147,10 @@ public class Game extends JPanel implements Runnable
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		menu = new Menu();
+		map = new Map();
 		end = new End();
-		score = new Score();
 		sound = new Sound();
+		score = new Score();
 		player = new Player();
 		enemies.add(new Enemy());
 		
@@ -187,7 +189,7 @@ public class Game extends JPanel implements Runnable
 			e.printStackTrace();
 		}
 		
-		System.exit(1);
+		System.exit(ABORT);
 	}
 	
 	@Override
@@ -251,6 +253,8 @@ public class Game extends JPanel implements Runnable
 		
 		if (state.equals(STATE.PLAY) || state.equals(STATE.END))
 		{
+			map.paint(g2d);
+			
 			for (int i = 0; i < bullets.size(); ++i)
 			{
 				bullets.get(i).paint(g2d);
@@ -283,7 +287,7 @@ public class Game extends JPanel implements Runnable
 
 	public void end()
 	{
-		sound.GAMEOVER.play();
+		sound.GAMEOVER.start();
 		state = STATE.END;
 	}
 	
@@ -304,7 +308,7 @@ public class Game extends JPanel implements Runnable
 	{
 		return state;
 	}
-
+	
 	public Sound getSound()
 	{
 		return sound;
@@ -323,6 +327,11 @@ public class Game extends JPanel implements Runnable
 	public Player getPlayer()
 	{
 		return player;
+	}
+	
+	public List<Enemy> getEnemies()
+	{
+		return enemies;
 	}
 	
 	public List<Bullet> getBullets()

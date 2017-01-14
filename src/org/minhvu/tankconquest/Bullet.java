@@ -39,7 +39,6 @@ public class Bullet extends Sprite
 		
 		angle = Game.getInstance().getPlayer().getAngle();
 		//initial = Game.getInstance().getPlayer().getLocation();
-		
 
 		Game.getInstance().getSound().FIRE.stop();
 		Game.getInstance().getSound().FIRE.setFramePosition(0);
@@ -58,10 +57,18 @@ public class Bullet extends Sprite
 
 		if (sprite instanceof Player)
 		{
+			Player player = (Player) sprite;
 			
+			for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
+			{
+				if (player.getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()))
+				{
+					
+				}
+			}
 		}
 		
-		if (sprite instanceof Enemy)
+		else if (sprite instanceof Enemy)
 		{
 			
 		}
