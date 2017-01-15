@@ -2,6 +2,7 @@ package org.minhvu.tankconquest;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -83,8 +84,18 @@ public class Enemy extends Tank
 		{
 			if (!Game.getInstance().getEnemies().get(i).equals(this) && Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
 			{
-				//Game.getInstance().getEnemies().get(i).turn();
 				turn();
+			}
+		}
+		
+		for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
+		{
+			for (int j = 0; j < Game.getInstance().getMap().getMap()[i].length; ++j)
+			{
+				if (Game.getInstance().getMap().getMap()[i][j] != 0 && new Rectangle(j * 84, i * 84, 84, 84).intersects(getBounds()))
+				{
+					turn();
+				}
 			}
 		}
 		

@@ -146,7 +146,7 @@ public class Game extends JPanel implements Runnable
 		frame.setVisible(true);
 		
 		menu = new Menu();
-		map = new Map();
+		map = new Map(Map.MAPS.FORGOTTEN_HERO);
 		end = new End();
 		sound = new Sound();
 		score = new Score();
@@ -350,6 +350,11 @@ public class Game extends JPanel implements Runnable
 	public STATE getState()
 	{
 		return state;
+	}
+	
+	public Map getMap()
+	{
+		return map;
 	}
 	
 	public Sound getSound()

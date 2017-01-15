@@ -45,14 +45,30 @@ public class Sprite
 	protected double initialangle;
 	protected double angle;
 	
+	public Sprite()
+	{
+		location = new Point();
+		dimension = new Dimension();
+	}
+	
 	public Point getLocation()
 	{
 		return location;
 	}
 	
+	public void setLocation(Point location)
+	{
+		this.location = location;
+	}
+	
 	public Dimension getDimensions()
 	{
 		return dimension;
+	}
+	
+	public void setDimensions(Dimension dimension)
+	{
+		this.dimension = dimension;
 	}
 	
 	public Rectangle getBounds()
