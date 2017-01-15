@@ -56,6 +56,8 @@ public class Player extends Tank
 	
 	public void move()
 	{
+		boolean collision = false;
+		
 		if (uppressed)
 		{
 			if (speed < forward && System.currentTimeMillis() - movementtimer > revspeed)
@@ -71,11 +73,7 @@ public class Player extends Tank
 			{
 				if (getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()))
 				{
-				    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
-				    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
-
-					movementtimer = System.currentTimeMillis();
-					speed = reverse;
+					collision = true;
 				}
 			}
 		    
@@ -85,14 +83,19 @@ public class Player extends Tank
 				{
 					if (Game.getInstance().getMap().getMap()[i][j] != 0 && new Rectangle(j * 84, i * 84, 84, 84).intersects(getBounds()))
 					{
-					    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
-					    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
-
-						movementtimer = System.currentTimeMillis();
-						speed = reverse;
+						collision = true;
 					}
 				}
 			}
+		    
+		    if (collision)	
+		    {
+			    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
+			    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
+
+				movementtimer = System.currentTimeMillis();
+				speed = reverse;
+		    }
 		}
 		
 		else
@@ -110,8 +113,7 @@ public class Player extends Tank
 			{
 				if (getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()))
 				{
-				    location.x -= Math.round(reverse * Math.cos(Math.toRadians(angle)));
-				    location.y -= Math.round(reverse * Math.sin(Math.toRadians(angle)));
+					collision = true;
 				}
 			}
 		    
@@ -121,11 +123,16 @@ public class Player extends Tank
 				{
 					if (Game.getInstance().getMap().getMap()[i][j] != 0 && new Rectangle(j * 84, i * 84, 84, 84).intersects(getBounds()))
 					{
-					    location.x -= Math.round(reverse * Math.cos(Math.toRadians(angle)));
-					    location.y -= Math.round(reverse * Math.sin(Math.toRadians(angle)));
+						collision = true;
 					}
 				}
 			}
+		    
+		    if (collision)
+		    {
+			    location.x -= Math.round(reverse * Math.cos(Math.toRadians(angle)));
+			    location.y -= Math.round(reverse * Math.sin(Math.toRadians(angle)));
+		    }
 		}
 		
 		if (getBounds().getCenterX() - dimension.width / 2 < 0)
