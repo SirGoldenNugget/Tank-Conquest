@@ -4,6 +4,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class Map
 {
@@ -14,8 +19,53 @@ public class Map
 	private Point[][] map;
 	private BufferedImage[][] spritemap;
 
-	public Map()
+	public Map(String filename)
 	{
+		FileReader filereader = null;
+		BufferedReader bufferedreader = null;
+		
+		try
+		{
+			filereader = new FileReader(filename);
+			bufferedreader = new BufferedReader(filereader);
+			
+			String line;
+			
+			while ((line = bufferedreader.readLine()) != null)
+			{
+				System.out.println(line);
+				
+				List<String> points = Arrays.asList(line.split(" "));
+			}
+		}
+		
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		finally
+		{
+			try
+			{
+				if (filereader != null)
+				{
+					filereader.close();
+				}
+				
+				if (bufferedreader != null)
+				{
+					bufferedreader.close();
+				}
+			}
+			
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		
 		tilesize = 84;
 		
 		dimensions = new Dimension(23, 13);

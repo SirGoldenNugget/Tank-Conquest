@@ -146,7 +146,7 @@ public class Game extends JPanel implements Runnable
 		frame.setVisible(true);
 		
 		menu = new Menu();
-		map = new Map();
+		map = new Map("res/map.txt");
 		end = new End();
 		sound = new Sound();
 		score = new Score();
@@ -313,6 +313,8 @@ public class Game extends JPanel implements Runnable
 
 	public void end()
 	{
+		sound.GAMEOVER.stop();
+		sound.GAMEOVER.setFramePosition(0);
 		sound.GAMEOVER.start();
 		state = STATE.END;
 	}
@@ -323,11 +325,26 @@ public class Game extends JPanel implements Runnable
 		
 		score = new Score();
 		player = new Player();
+		
+		enemies.clear();
+		
+		for (int i = 0; i < enemycount; ++i)
+		{
+			enemies.add(new Enemy());
+		}
+		
+		bullets.clear();
+		explosions.clear();
 	}
 
 	public static Game getInstance()
 	{
 		return instance;
+	}
+
+	public void setState(STATE state)
+	{
+		this.state = state;
 	}
 	
 	public STATE getState()
@@ -343,11 +360,6 @@ public class Game extends JPanel implements Runnable
 	public Score getScore()
 	{
 		return score;
-	}
-
-	public void setState(STATE state)
-	{
-		this.state = state;
 	}
 	
 	public Player getPlayer()
