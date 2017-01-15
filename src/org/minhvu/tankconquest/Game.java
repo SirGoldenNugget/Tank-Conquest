@@ -41,14 +41,16 @@ public class Game extends JPanel implements Runnable
 	private Sound sound;
 	private End end;
 	private Score score;
-	
-	private final int enemycount = 50;
+
+    protected static final Object SPRITE_LOCK = new Object();
+    
+	private final int enemycount = 10;
 	
 	private Player player;
 	private List<Enemy> enemies = new ArrayList<Enemy>(enemycount);
 	private List<Bullet> bullets = new ArrayList<Bullet>();
+	private List<Explosion> explosions = new ArrayList<Explosion>();
 	
-    protected static final Object SPRITE_LOCK = new Object();
 	
 	public Game()
 	{
@@ -128,7 +130,7 @@ public class Game extends JPanel implements Runnable
 		addMouseListener(mouselistener);
 		setFocusable(true);
 
-		Sprite.loadSprite("/spritesheetnt.png");
+		Sprite.loadSprite("/spritesheet.png");
 
 		//Sound.BACKGROUND.loop();
 		
@@ -242,6 +244,16 @@ public class Game extends JPanel implements Runnable
 						bullets.remove(i);
 					}
 				}
+				
+				for (int i = 0; i < explosions.size(); ++i)
+				{
+					explosions.get(i).getAnimation().update();
+					
+					if (explosions.get(i).getAnimation().isCycled())
+					{
+						explosions.remove(explosions.get(i));
+					}
+				}
 			}
 		}
 
@@ -272,7 +284,12 @@ public class Game extends JPanel implements Runnable
 						enemies.get(i).paint(g2d);
 					}
 					
-					player.paint(g2d);			
+					player.paint(g2d);
+					
+					for (int i = 0; i < explosions.size(); ++i)
+					{
+						explosions.get(i).paint(g2d);
+					}
 					
 					if (state.equals(STATE.END))
 					{
@@ -346,5 +363,10 @@ public class Game extends JPanel implements Runnable
 	public List<Bullet> getBullets()
 	{
 		return bullets;
+	}
+	
+	public List<Explosion> getExplosions()
+	{
+		return explosions;
 	}
 }

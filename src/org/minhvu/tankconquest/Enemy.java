@@ -3,6 +3,8 @@ package org.minhvu.tankconquest;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Enemy extends Tank
 {
@@ -57,16 +59,31 @@ public class Enemy extends Tank
 	
 	public void move()
 	{
-		if (direction)
-		{
-		    location.x -= Math.round(forward * Math.cos(Math.toRadians(angle)));
-		    location.y -= Math.round(forward * Math.sin(Math.toRadians(angle)));
-		}
+		boolean collision = false;
 		
-		else
+		// TODO FIX COLLISION DETECTION WITH ENEMIES.
+		
+		/*for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
 		{
-		    location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
-		    location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
+			if (Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
+			{
+				collision = true;
+			}
+		}*/
+
+		if (!collision)
+		{
+			if (direction)
+			{
+				location.x -= Math.round(forward * Math.cos(Math.toRadians(angle)));
+				location.y -= Math.round(forward * Math.sin(Math.toRadians(angle)));
+			}
+
+			else
+			{
+				location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
+				location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
+			}
 		}
 		
 		if (getBounds().getCenterX() - dimension.width / 2 < 0)
@@ -156,7 +173,7 @@ public class Enemy extends Tank
 		direction = false;
 		rotate = 180;
 		
-		new java.util.Timer().schedule(new java.util.TimerTask()
+		new Timer().schedule(new TimerTask()
 		{
 			@Override
 			public void run()

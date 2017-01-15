@@ -13,6 +13,7 @@ public class Animation
 	private int totalframes;
 
 	private boolean stopped;
+	private boolean cycled;
 
 	private List<Frame> frames = new ArrayList<Frame>();
 
@@ -20,6 +21,7 @@ public class Animation
 	{
 		this.framedelay = framedelay;
 		this.stopped = true;
+		this.cycled = false;
 
 		for (int i = 0; i < frames.length; i++)
 		{
@@ -107,6 +109,7 @@ public class Animation
 				if (currentframe > totalframes - 1)
 				{
 					currentframe = 0;
+					cycled = true;
 				}
 				
 				else if (currentframe < 0)
@@ -115,5 +118,10 @@ public class Animation
 				}
 			}
 		}
+	}
+	
+	public boolean isCycled()
+	{
+		return cycled;
 	}
 }

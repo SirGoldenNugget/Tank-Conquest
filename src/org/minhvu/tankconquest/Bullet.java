@@ -61,6 +61,7 @@ public class Bullet extends Sprite
 				{
 					exploded = true;
 					
+					Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getEnemies().get(i)));
 					Game.getInstance().getEnemies().remove(Game.getInstance().getEnemies().get(i));
 				}
 			}
@@ -70,6 +71,7 @@ public class Bullet extends Sprite
 		{
 			if (getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
 			{
+				Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getPlayer()));
 				Game.getInstance().end();
 			}
 		}
