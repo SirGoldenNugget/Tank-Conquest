@@ -232,7 +232,7 @@ public class Game extends JPanel implements Runnable
 				for (int i = 0; i < enemies.size(); ++i)
 				{
 					enemies.get(i).move();
-					enemies.get(i).fire();
+					//enemies.get(i).fire();
 				}
 				
 				for (int i = 0; i < bullets.size(); ++i)

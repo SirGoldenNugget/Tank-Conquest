@@ -72,12 +72,24 @@ public class Enemy extends Tank
 		{
 			location.x -= Math.round(forward * Math.cos(Math.toRadians(angle)));
 			location.y -= Math.round(forward * Math.sin(Math.toRadians(angle)));
+			
+			if (getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
+			{
+				location.x += Math.round(forward * Math.cos(Math.toRadians(angle)));
+				location.y += Math.round(forward * Math.sin(Math.toRadians(angle)));
+			}
 		}
 
 		else
 		{
 			location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
 			location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
+			
+			if (getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
+			{
+				location.x -= Math.round(reverse * Math.cos(Math.toRadians(angle)));
+				location.y -= Math.round(reverse * Math.sin(Math.toRadians(angle)));
+			}
 		}
 		
 		for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
