@@ -44,8 +44,16 @@ public class Enemy extends Tank
 		maxrotation = 2500;
 		minrotation = 1000;
 
-		location = new Point((int) (Math.random() * 1800), (int) (Math.random() * 900));
 		dimension = new Dimension(84, 84);
+		location = new Point((int) (Math.random() * (1920 - dimension.width)), (int) (Math.random() * (1080 - dimension.height)));
+		
+		for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
+		{
+			while (!Game.getInstance().getEnemies().get(i).equals(this) && Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
+			{
+				location = new Point((int) (Math.random() * (1920 - dimension.width)), (int) (Math.random() * (1080 - dimension.height)));
+			}
+		}
 		
 		forward = 2;
 		reverse = 1;
@@ -75,7 +83,7 @@ public class Enemy extends Tank
 		{
 			if (!Game.getInstance().getEnemies().get(i).equals(this) && Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
 			{
-				Game.getInstance().getEnemies().get(i).turn();
+				//Game.getInstance().getEnemies().get(i).turn();
 				turn();
 			}
 		}

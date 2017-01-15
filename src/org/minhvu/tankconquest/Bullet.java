@@ -61,6 +61,7 @@ public class Bullet extends Sprite
 				{
 					exploded = true;
 					
+					Game.getInstance().getScore().increment();
 					Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getEnemies().get(i)));
 					Game.getInstance().getEnemies().remove(Game.getInstance().getEnemies().get(i));
 				}

@@ -26,8 +26,7 @@ public class Score
 	// Rendering Image
 	public void paint(Graphics2D g2d)
 	{
-		g2d.setColor(Color.BLACK);
-		g2d.setColor(Color.GRAY);
+		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("Verdana", Font.BOLD, 30));
 		g2d.drawString(String.valueOf(score), 10, 30);
 	}
