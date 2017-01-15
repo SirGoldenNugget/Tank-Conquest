@@ -146,7 +146,7 @@ public class Game extends JPanel implements Runnable
 		frame.setVisible(true);
 		
 		menu = new Menu();
-		map = new Map("res/map.txt");
+		map = new Map();
 		end = new End();
 		sound = new Sound();
 		score = new Score();

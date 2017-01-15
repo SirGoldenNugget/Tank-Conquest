@@ -4,11 +4,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 public class Map
 {
@@ -16,69 +11,88 @@ public class Map
 	
 	private Dimension dimensions;
 
-	private Point[][] map;
+	private Point tile;
+	
+	private int[][] map = 
+	{
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+	};
+	
 	private BufferedImage[][] spritemap;
 
-	public Map(String filename)
+	public Map()
 	{
-		FileReader filereader = null;
-		BufferedReader bufferedreader = null;
-		
-		try
-		{
-			filereader = new FileReader(filename);
-			bufferedreader = new BufferedReader(filereader);
-			
-			String line;
-			
-			while ((line = bufferedreader.readLine()) != null)
-			{
-				System.out.println(line);
-				
-				List<String> points = Arrays.asList(line.split(" "));
-			}
-		}
-		
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		
-		finally
-		{
-			try
-			{
-				if (filereader != null)
-				{
-					filereader.close();
-				}
-				
-				if (bufferedreader != null)
-				{
-					bufferedreader.close();
-				}
-			}
-			
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		
-		
 		tilesize = 84;
 		
 		dimensions = new Dimension(23, 13);
 		
-		map = new Point[dimensions.height][dimensions.width];
+		tile = new Point();
+		
 		spritemap = new BufferedImage[dimensions.height][dimensions.width];
 
 		for (int i = 0; i < dimensions.height; ++i)
 		{
 			for (int j = 0; j < dimensions.width; ++j)
 			{
-				map[i][j] = new Point(0, 0);
-				spritemap[i][j] = Sprite.getSprite(map[i][j].x, map[i][j].y, tilesize);
+				switch (map[i][j])
+				{
+					case 0:
+						tile.x = 0;
+						tile.y = 0;
+						break;
+					case 1:
+						tile.x = 0;
+						tile.y = 3;
+						break;
+					case 2:
+						tile.x = 1;
+						tile.y = 3;
+						break;
+					case 3:
+						tile.x = 2;
+						tile.y = 3;
+						break;
+					case 4:
+						tile.x = 3;
+						tile.y = 3;
+						break;
+					case 5:
+						tile.x = 4;
+						tile.y = 3;
+						break;
+					case 6:
+						tile.x = 5;
+						tile.y = 3;
+						break;
+					case 7:
+						tile.x = 6;
+						tile.y = 3;
+						break;
+					case 8:
+						tile.x = 7;
+						tile.y = 3;
+						break;
+					case 9:
+						tile.x = 8;
+						tile.y = 3;
+						break;
+					default:
+						break;
+				}
+
+				spritemap[i][j] = Sprite.getSprite(tile.x, tile.y, tilesize);
 			}
 		}
 	}
