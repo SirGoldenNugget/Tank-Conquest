@@ -42,11 +42,13 @@ public class Game extends JPanel implements Runnable
 	private End end;
 	private Score score;
 	
-	private final int enemycount = 5;
+	private final int enemycount = 50;
 	
 	private Player player;
-	private List<Enemy> enemies = new ArrayList<Enemy>();
+	private List<Enemy> enemies = new ArrayList<Enemy>(enemycount);
 	private List<Bullet> bullets = new ArrayList<Bullet>();
+	
+    protected static final Object SPRITE_LOCK = new Object();
 	
 	public Game()
 	{
@@ -131,13 +133,15 @@ public class Game extends JPanel implements Runnable
 		//Sound.BACKGROUND.loop();
 		
 		JFrame frame = new JFrame("Tank Conquest");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this);
 		frame.setSize(1920, 1080);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setUndecorated(true);
 		frame.setResizable(false);
+		//frame.pack();
+		//frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		menu = new Menu();
 		map = new Map();
@@ -217,70 +221,77 @@ public class Game extends JPanel implements Runnable
 	{
 		this.setBackground(Color.BLACK);
 		
-		if (state.equals(STATE.PLAY))
+		synchronized (SPRITE_LOCK)
 		{
-			player.move();
-			
-			for (int i = 0; i < enemies.size(); ++i)
+			if (state.equals(STATE.PLAY))
 			{
-				enemies.get(i).move();
-				enemies.get(i).fire();
-			}
-			
-			for (int i = 0; i < bullets.size(); ++i)
-			{
-				bullets.get(i).move();
-
-				if (bullets.get(i).hasExploded())
+				player.move();
+				
+				for (int i = 0; i < enemies.size(); ++i)
 				{
-					bullets.remove(i);
+					enemies.get(i).move();
+					enemies.get(i).fire();
+				}
+				
+				for (int i = 0; i < bullets.size(); ++i)
+				{
+					bullets.get(i).move();
+
+					if (bullets.get(i).hasExploded())
+					{
+						bullets.remove(i);
+					}
 				}
 			}
 		}
-		
+
 		repaint();
 	}
 
 	@Override
-	public void paint(Graphics g)
+	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-		
-		super.paint(g2d);
 
-		map.paint(g2d);
+		super.paintComponent(g2d);
 		
-		if (state.equals(STATE.PLAY) || state.equals(STATE.END))
-		{	
-			for (int i = 0; i < bullets.size(); ++i)
-			{
-				bullets.get(i).paint(g2d);
-			}
-
-			for (int i = 0; i < enemies.size(); ++i)
-			{
-				enemies.get(i).paint(g2d);
-			}
-			
-			player.paint(g2d);			
-			
-			if (state.equals(STATE.END))
-			{
-				end.paint(g2d);
-			}
-			
-			else
-			{
-				score.paint(g2d);
-			}
-		}
-		
-		else if (state.equals(STATE.MENU) || state.equals(STATE.HELP))
+		synchronized(SPRITE_LOCK)
 		{
-			menu.paint(g2d);
+			map.paint(g2d);
+			
+			if (state.equals(STATE.PLAY) || state.equals(STATE.END))
+			{
+					for (int i = 0; i < bullets.size(); ++i)
+					{
+						bullets.get(i).paint(g2d);
+					}
+
+					for (int i = 0; i < enemies.size(); ++i)
+					{
+						enemies.get(i).paint(g2d);
+					}
+					
+					player.paint(g2d);			
+					
+					if (state.equals(STATE.END))
+					{
+						end.paint(g2d);
+					}
+					
+					else
+					{
+						score.paint(g2d);
+					}
+			}
+			
+			else if (state.equals(STATE.MENU) || state.equals(STATE.HELP))
+			{
+				menu.paint(g2d);
+			}
 		}
 		
+		g2d.dispose();
 	}
 
 	public void end()

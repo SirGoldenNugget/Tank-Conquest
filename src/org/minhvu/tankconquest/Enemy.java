@@ -50,7 +50,7 @@ public class Enemy extends Tank
 		
 		firerate = (int) (Math.random() * 2000) + 1000;
 		
-		initialangle = 90;
+		initialangle = 90; // TODO Make The Angle Able To Become Random.
 		angle = initialangle;
 		rotation = 1;
 	}
