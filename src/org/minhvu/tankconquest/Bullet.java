@@ -3,6 +3,7 @@ package org.minhvu.tankconquest;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Bullet extends Sprite
@@ -87,6 +88,17 @@ public class Bullet extends Sprite
 			{
 				Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getPlayer()));
 				Game.getInstance().end();
+			}
+		}
+		
+		for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
+		{
+			for (int j = 0; j < Game.getInstance().getMap().getMap()[i].length; ++j)
+			{
+				if (Game.getInstance().getMap().getMap()[i][j] != 0 && getBounds().intersects(new Rectangle(j * 84, i * 84, 84, 84)))
+				{
+					exploded = true;
+				}
 			}
 		}
 
