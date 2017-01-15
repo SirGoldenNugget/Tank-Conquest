@@ -1,11 +1,10 @@
 package org.minhvu.tankconquest;
 
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-public class Enemy extends Sprite
+public class Enemy extends Tank
 {
 	private static BufferedImage[] moving =
 	{
@@ -19,11 +18,6 @@ public class Enemy extends Sprite
 		Sprite.getSprite(0, 2, 84)
 	};
 	
-	private Animation movement;
-	
-	private int forward;
-	private int reverse;
-	
 	private int rotate;
 
 	private boolean direction;
@@ -32,8 +26,6 @@ public class Enemy extends Sprite
 	
 	private boolean turn = false;
 	private boolean left = false;
-	
-	private double rotation;
 	
 	private long timer = System.currentTimeMillis();
 	
@@ -56,15 +48,11 @@ public class Enemy extends Sprite
 		forward = 2;
 		reverse = 1;
 		
-		angle = 90;
+		firerate = (int) (Math.random() * 2000) + 1000;
+		
+		initialangle = 90;
+		angle = initialangle;
 		rotation = 1;
-	}
-	
-	public void paint(Graphics2D g2d)
-	{
-		g2d.rotate(Math.toRadians(angle - 90), getBounds().getCenterX(), getBounds().getCenterY());
-		g2d.drawImage(movement.getSprite(), location.x, location.y, Game.getInstance());
-		g2d.rotate(Math.toRadians(-(angle - 90)), getBounds().getCenterX(), getBounds().getCenterY());
 	}
 	
 	public void move()
@@ -156,7 +144,7 @@ public class Enemy extends Sprite
 	
 	public void fire()
 	{
-		if (System.currentTimeMillis() - timer > Bullet.getFireRate())
+		if (System.currentTimeMillis() - timer > firerate)
 		{
 			timer = System.currentTimeMillis();
 			Game.getInstance().getBullets().add(new Bullet(this));

@@ -42,7 +42,7 @@ public class Game extends JPanel implements Runnable
 	private End end;
 	private Score score;
 	
-	private final int enemycount = 15;
+	private final int enemycount = 5;
 	
 	private Player player;
 	private List<Enemy> enemies = new ArrayList<Enemy>();

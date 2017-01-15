@@ -41,6 +41,8 @@ public class Sprite
 	
 	protected Point location;
 	protected Dimension dimension;
+
+	protected double initialangle;
 	protected double angle;
 	
 	public Point getLocation()
@@ -56,6 +58,11 @@ public class Sprite
 	public Rectangle getBounds()
 	{
 		return new Rectangle(location, dimension);
+	}
+	
+	public double getInitialAngle()
+	{
+		return initialangle;
 	}
 	
 	public double getAngle()

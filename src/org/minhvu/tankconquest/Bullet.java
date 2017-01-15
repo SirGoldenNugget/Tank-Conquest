@@ -8,14 +8,14 @@ import java.awt.image.BufferedImage;
 public class Bullet extends Sprite
 {
 	private static BufferedImage image = Sprite.getSprite(454, 202, 16, 16);
-
-	private static final int firerate = 500;
 	
 	private int speed;
 	//private double range;
 	
 	private boolean exploded;
 	
+	@SuppressWarnings("unused")
+	private double intialangle;
 	private double angle;
 	//private Point initial;
 	
@@ -36,6 +36,7 @@ public class Bullet extends Sprite
 		
 		exploded = false;
 		
+		initialangle = sprite.getInitialAngle();
 		angle = sprite.getAngle();
 		//initial = Game.getInstance().getPlayer().getLocation();
 
@@ -82,18 +83,13 @@ public class Bullet extends Sprite
 	
 	public void paint(Graphics2D g2d)
 	{
-		g2d.rotate(angle - 90, getBounds().getCenterX(), getBounds().getCenterY());
+		g2d.rotate(angle - initialangle, getBounds().getCenterX(), getBounds().getCenterY());
 		g2d.drawImage(image, location.x, location.y, Game.getInstance());
-		g2d.rotate(-(angle - 90), getBounds().getCenterX(), getBounds().getCenterY());
+		g2d.rotate(-(angle - initialangle), getBounds().getCenterX(), getBounds().getCenterY());
 	}
 	
 	public boolean hasExploded()
 	{
 		return exploded;
-	}
-	
-	public static int getFireRate()
-	{
-		return firerate;
 	}
 }

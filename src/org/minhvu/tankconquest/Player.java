@@ -1,12 +1,11 @@
 package org.minhvu.tankconquest;
 
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class Player extends Sprite
+public class Player extends Tank
 {
 	private static BufferedImage[] moving =
 	{
@@ -19,24 +18,11 @@ public class Player extends Sprite
 		Sprite.getSprite(7, 0, 84),
 		Sprite.getSprite(0, 1, 84)
 	};
-	
-	private Animation movement;
-	
-	private int speed;
-	private int forward;
-	private int reverse;
-	
-	private long movementtimer = System.currentTimeMillis();
 
 	private boolean uppressed;
 	private boolean downpressed;
 	private boolean leftpressed;
 	private boolean rightpressed;
-	
-	private double angle;
-	private double rotation;
-	
-	private long bullettimer = System.currentTimeMillis();
 	
 	public Player()
 	{
@@ -51,20 +37,16 @@ public class Player extends Sprite
 		forward = 5;
 		reverse = 2;
 		
+		firerate = 1000;
+		
 		uppressed = false;
 		downpressed = false;
 		leftpressed = false;
 		rightpressed = false;
 		
-		angle = 90;
+		initialangle = 90;
+		angle = initialangle;
 		rotation = 1;
-	}
-	
-	public void paint(Graphics2D g2d)
-	{
-		g2d.rotate(Math.toRadians(angle - 90), getBounds().getCenterX(), getBounds().getCenterY());
-		g2d.drawImage(movement.getSprite(), location.x, location.y, Game.getInstance());
-		g2d.rotate(Math.toRadians(-(angle - 90)), getBounds().getCenterX(), getBounds().getCenterY());
 	}
 	
 	public void move()
@@ -174,15 +156,10 @@ public class Player extends Sprite
 			rightpressed = true;
 		}
 		
-		if (e.getKeyCode() == KeyEvent.VK_SPACE && System.currentTimeMillis() - bullettimer > Bullet.getFireRate())
+		if (e.getKeyCode() == KeyEvent.VK_SPACE && System.currentTimeMillis() - bullettimer > firerate)
 		{
 			Game.getInstance().getBullets().add(new Bullet(this));
 			bullettimer = System.currentTimeMillis();
 		}
-	}
-	
-	public double getAngle()
-	{
-		return angle;
 	}
 }
