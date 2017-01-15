@@ -69,6 +69,19 @@ public class Bullet extends Sprite
 		
 		else if (sprite instanceof Enemy)
 		{
+			/*-
+			for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
+			{
+				if (getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()) && !Game.getInstance().getEnemies().get(i).equals(sprite))
+				{
+					exploded = true;
+					
+					Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getEnemies().get(i)));
+					Game.getInstance().getEnemies().remove(Game.getInstance().getEnemies().get(i));
+				}
+			}
+			*/
+			
 			if (getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
 			{
 				Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getPlayer()));

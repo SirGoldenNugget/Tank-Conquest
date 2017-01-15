@@ -58,31 +58,25 @@ public class Enemy extends Tank
 	}
 	
 	public void move()
-	{
-		boolean collision = false;
-		
-		// TODO FIX COLLISION DETECTION WITH ENEMIES.
-		
-		/*for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
+	{	
+		if (direction)
 		{
-			if (Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
-			{
-				collision = true;
-			}
-		}*/
+			location.x -= Math.round(forward * Math.cos(Math.toRadians(angle)));
+			location.y -= Math.round(forward * Math.sin(Math.toRadians(angle)));
+		}
 
-		if (!collision)
+		else
 		{
-			if (direction)
+			location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
+			location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
+		}
+		
+		for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
+		{
+			if (!Game.getInstance().getEnemies().get(i).equals(this) && Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
 			{
-				location.x -= Math.round(forward * Math.cos(Math.toRadians(angle)));
-				location.y -= Math.round(forward * Math.sin(Math.toRadians(angle)));
-			}
-
-			else
-			{
-				location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
-				location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
+				Game.getInstance().getEnemies().get(i).turn();
+				turn();
 			}
 		}
 		
