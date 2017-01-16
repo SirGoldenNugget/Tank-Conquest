@@ -60,10 +60,10 @@ public class Healthbar
 		
 		g2d.setFont(healthfont);
 		g2d.setColor(Color.BLACK);
-		g2d.drawString(health + "", (int) (healthbar.getCenterX() - g2d.getFontMetrics().stringWidth(health + "") / 2), (int) (healthbar.getCenterY() + 4));
+		g2d.drawString(health + "", (int) (healthbar.getCenterX() - g2d.getFontMetrics().stringWidth(health + "") / 2), (int) (healthbar.getCenterY() + 5));
 		
 		g2d.setFont(namefont);
-		g2d.drawString(name, (int) (healthbar.getCenterX() - g2d.getFontMetrics().stringWidth(name) / 2), (int) (sprite.getLocation().y - 4));
+		g2d.drawString(name, (int) (healthbar.getCenterX() - g2d.getFontMetrics().stringWidth(name) / 2), (int) (sprite.getLocation().y - 5));
 	}
 
 	public int getHealth()
