@@ -231,6 +231,7 @@ public class Player extends Tank
 	@Override
 	public void end()
 	{
-		
+		Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getPlayer()));
+		Game.getInstance().end();
 	}
 }

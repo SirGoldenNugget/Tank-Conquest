@@ -89,8 +89,14 @@ public class Bullet extends Sprite
 			
 			if (getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
 			{
-				Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getPlayer()));
-				Game.getInstance().end();
+				exploded = true;
+				
+				Game.getInstance().getPlayer().getHealthbar().setHealth(Game.getInstance().getPlayer().getHealthbar().getHealth() - ((Tank) sprite).getDamage());
+				
+				if (Game.getInstance().getPlayer().getHealthbar().getHealth() <= 0)
+				{
+					Game.getInstance().getPlayer().end();
+				}
 			}
 		}
 		

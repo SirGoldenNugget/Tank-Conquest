@@ -213,7 +213,7 @@ public class Game extends JPanel implements Runnable
 			if (delta >= 1)
 			{
 				update();
-				delta--;
+				--delta;
 			}
 		}
 		

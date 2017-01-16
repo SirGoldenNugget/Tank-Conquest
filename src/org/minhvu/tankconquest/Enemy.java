@@ -48,7 +48,10 @@ public class Enemy extends Tank
 		"Brad",
 		"Julia",
 		"Olivia",
-		"Snake"
+		"Snake",
+		"Alexander",
+		"Will",
+		"Evan"
 	};
 	
 	public Enemy()
