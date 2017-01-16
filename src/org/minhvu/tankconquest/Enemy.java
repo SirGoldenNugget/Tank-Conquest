@@ -124,6 +124,7 @@ public class Enemy extends Tank
 			if (!Game.getInstance().getEnemies().get(i).equals(this) && Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
 			{
 				turn();
+				break;
 			}
 		}
 		
@@ -134,6 +135,7 @@ public class Enemy extends Tank
 				if (Game.getInstance().getMap().getMap()[i][j] != 0 && new Rectangle(j * 84, i * 84, 84, 84).intersects(getBounds()))
 				{
 					turn();
+					break;
 				}
 			}
 		}
