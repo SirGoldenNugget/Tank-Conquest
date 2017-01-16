@@ -32,12 +32,35 @@ public class Enemy extends Tank
 	
 	private long timer = System.currentTimeMillis();
 	
+	private static String[] names = 
+	{
+		"Minh",
+		"Cory",
+		"Quin",
+		"Reda",
+		"Julian",
+		"Nico",
+		"Annaliese",
+		"Adam",
+		"Paul",
+		"Alex",
+		"Brandon",
+		"Brad",
+		"Julia",
+		"Olivia",
+		"Snake"
+	};
+	
 	public Enemy()
 	{
 		super();
 		
 		movement = new Animation(moving, 10);
 		movement.start();
+		
+		healthbar = new Healthbar(this, names[(int)(Math.random() * names.length)], 100);
+		
+		damage = (int) (Math.random() * 10) + 1;
 		
 		rotate = (int) (Math.random()  * 40 + 1);
 		
@@ -66,6 +89,7 @@ public class Enemy extends Tank
 		rotation = 1;
 	}
 	
+	@Override
 	public void move()
 	{	
 		if (direction)
@@ -206,5 +230,13 @@ public class Enemy extends Tank
 				direction = true;
 			}
 		}, (int) (Math.random() * (maxrotation - minrotation)) + minrotation);
+	}
+	
+	@Override
+	public void end()
+	{
+		Game.getInstance().getScore().increment();
+		Game.getInstance().getExplosions().add(new Explosion(this));
+		Game.getInstance().getEnemies().remove(this);
 	}
 }

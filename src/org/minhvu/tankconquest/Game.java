@@ -136,6 +136,7 @@ public class Game extends JPanel implements Runnable
 		
 		JFrame frame = new JFrame("Tank Conquest");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setIconImage(Sprite.getSprite(1, 0, 84));
 		frame.add(this);
 		frame.setSize(1920, 1080);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

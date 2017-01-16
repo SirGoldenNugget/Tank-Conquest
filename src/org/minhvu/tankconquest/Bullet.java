@@ -62,9 +62,12 @@ public class Bullet extends Sprite
 				{
 					exploded = true;
 					
-					Game.getInstance().getScore().increment();
-					Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getEnemies().get(i)));
-					Game.getInstance().getEnemies().remove(Game.getInstance().getEnemies().get(i));
+					Game.getInstance().getEnemies().get(i).getHealthbar().setHealth(Game.getInstance().getEnemies().get(i).getHealthbar().getHealth() - ((Tank) sprite).getDamage());
+					
+					if (Game.getInstance().getEnemies().get(i).getHealthbar().getHealth() <= 0)
+					{
+						Game.getInstance().getEnemies().get(i).end();
+					}
 				}
 			}
 		}

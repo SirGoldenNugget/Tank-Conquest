@@ -34,6 +34,10 @@ public class Player extends Tank
 		movement = new Animation(moving, 10);
 		movement.start();
 		
+		healthbar = new Healthbar(this, "SirGoldenNugget", 100);
+		
+		damage = 20;
+		
 		location = new Point(700, 700);
 		dimension = new Dimension(84, 84);
 		
@@ -54,6 +58,7 @@ public class Player extends Tank
 		rotation = 1;
 	}
 	
+	@Override
 	public void move()
 	{
 		boolean collision = false;
@@ -221,5 +226,11 @@ public class Player extends Tank
 			Game.getInstance().getBullets().add(new Bullet(this));
 			bullettimer = System.currentTimeMillis();
 		}
+	}
+
+	@Override
+	public void end()
+	{
+		
 	}
 }
