@@ -1,7 +1,8 @@
 package org.minhvu.tankconquest;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 
 public abstract class Tank extends Sprite
 {
@@ -42,11 +43,21 @@ public abstract class Tank extends Sprite
 		for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
 		{
 			for (int j = 0; j < Game.getInstance().getMap().getMap()[i].length; ++j)
-			{
-				if (Game.getInstance().getMap().getMap()[i][j] != 0
-						&& new Rectangle(j * 84, i * 84, 84, 84).intersects(getBounds()))
+			{	
+				if (Game.getInstance().getMap().getMap()[i][j] != 0)
 				{
-					return true;
+					Ellipse2D tile = new Ellipse2D.Float(j * 84, i * 84, 84, 84);
+					Ellipse2D tank = new Ellipse2D.Float(location.x, location.y, 84, 84);
+					
+					Area tilearea = new Area(tile);
+					Area tankarea = new Area(tank);
+					
+					tilearea.intersect(tankarea);
+					
+					if (!tilearea.isEmpty())
+					{
+						return true;
+					}
 				}
 			}
 		}
