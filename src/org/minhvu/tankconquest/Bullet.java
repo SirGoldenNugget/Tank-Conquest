@@ -66,7 +66,18 @@ public class Bullet extends Sprite
 					
 					if (Game.getInstance().getEnemies().get(i).getHealthbar().getHealth() <= 0)
 					{
+						Game.getInstance().getSound().EXPLOSION.stop();
+						Game.getInstance().getSound().EXPLOSION.setFramePosition(0);
+						Game.getInstance().getSound().EXPLOSION.start();
+						
 						Game.getInstance().getEnemies().get(i).end();
+					}
+					
+					else
+					{
+						Game.getInstance().getSound().HIT.stop();
+						Game.getInstance().getSound().HIT.setFramePosition(0);
+						Game.getInstance().getSound().HIT.start();
 					}
 				}
 			}
@@ -95,7 +106,18 @@ public class Bullet extends Sprite
 				
 				if (Game.getInstance().getPlayer().getHealthbar().getHealth() <= 0)
 				{
+					Game.getInstance().getSound().EXPLOSION.stop();
+					Game.getInstance().getSound().EXPLOSION.setFramePosition(0);
+					Game.getInstance().getSound().EXPLOSION.start();
+					
 					Game.getInstance().getPlayer().end();
+				}
+
+				else
+				{
+					Game.getInstance().getSound().HIT.stop();
+					Game.getInstance().getSound().HIT.setFramePosition(0);
+					Game.getInstance().getSound().HIT.start();
 				}
 			}
 		}
