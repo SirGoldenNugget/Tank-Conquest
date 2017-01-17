@@ -12,12 +12,16 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class Sound
 {
 	public Clip FIRE;
+	public Clip HIT;
+	public Clip EXPLOSION;
 	public Clip GAMEOVER;
 	
 	public Sound()
 	{
 		GAMEOVER = getAudioClip("res/gameover.wav");
 		FIRE = getAudioClip("res/fire.wav");
+		HIT = getAudioClip("res/hit.wav");
+		EXPLOSION = getAudioClip("res/explosion.wav");
 	}
 	
 	private Clip getAudioClip(String path)
