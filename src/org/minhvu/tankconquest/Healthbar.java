@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
 public class Healthbar
@@ -12,6 +14,9 @@ public class Healthbar
 	private int maxhealth;
 	
 	private RoundRectangle2D healthbar;
+	private Rectangle2D middlebar;
+	private Ellipse2D frontend;
+	private Ellipse2D backend;
 	
 	private Font healthfont = new Font("calibri", Font.BOLD, 14);
 	private Font namefont = new Font("calibri", Font.BOLD, 16);
@@ -28,12 +33,22 @@ public class Healthbar
 		this.health = this.maxhealth;
 		
 		healthbar = new RoundRectangle2D.Float(0, 0, 60, 14, 14, 14);
+		middlebar = new Rectangle2D.Float(0, 0, 46, 14);
+		frontend = new Ellipse2D.Float(0, 0, 14, 14);
+		backend = new Ellipse2D.Float(0, 0, 14, 14);
 	}
 	
 	public void paint(Graphics2D g2d)
 	{
-		healthbar.setFrame(new Point((int) (sprite.getLocation().x + (sprite.getDimensions().getWidth() - healthbar.getBounds().getSize().getWidth()) / 2),
-				(int) (sprite.getLocation().y + sprite.getDimensions().getHeight() + 10)), healthbar.getBounds().getSize());
+		healthbar.setFrame(new Point((int) (sprite.getLocation().x + (sprite.getDimensions().getWidth() - healthbar.getBounds().getSize().getWidth()) / 2), (int) (sprite.getLocation().y + sprite.getDimensions().getHeight() + 10)), healthbar.getBounds().getSize());
+
+		frontend.setFrame(healthbar.getBounds().getLocation(), frontend.getBounds().getSize());
+		middlebar.setFrame(new Point((int) (frontend.getX() + frontend.getBounds().getSize().width / 2) - 12, (int) (frontend.getY())), middlebar.getBounds().getSize());
+		backend.setFrame(new Point((int) (middlebar.getX() + middlebar.getWidth() - 7 /* TODO ADJUST */), (int) (middlebar.getY())), backend.getBounds().getSize());
+		
+		g2d.setColor(Color.BLACK);
+		g2d.fill(healthbar);
+		g2d.draw(healthbar);
 		
 		if (health > (int) (maxhealth / 4 * 3))
 		{
@@ -54,9 +69,13 @@ public class Healthbar
 		{
 			g2d.setColor(Color.RED);
 		}
-		
-		g2d.fill(healthbar);
-		g2d.draw(healthbar);
+
+		g2d.fill(middlebar);
+		g2d.draw(middlebar);
+		g2d.fill(frontend);
+		g2d.draw(frontend);
+		g2d.fill(backend);
+		g2d.draw(backend);
 		
 		g2d.setFont(healthfont);
 		g2d.setColor(Color.BLACK);
