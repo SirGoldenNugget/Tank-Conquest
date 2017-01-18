@@ -54,7 +54,7 @@ public class Player extends Tank
 		
 		initialangle = 90;
 		angle = initialangle;
-		rotation = 1;
+		rotation = 2;
 	}
 	
 	@Override
@@ -70,8 +70,10 @@ public class Player extends Tank
 			
 		    location.x -= Math.round(speed * Math.cos(Math.toRadians(angle)));
 		    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
-		   
-		    if (hasCollision() || hasCollisionEnemy())	
+			
+			hasCollision();
+
+		    if (/*hasCollision() || */hasCollisionEnemy())	
 		    {
 			    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
 			    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
@@ -92,7 +94,9 @@ public class Player extends Tank
 		    location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
 		    location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
 		    
-		    if (hasCollision() || hasCollisionEnemy())
+		    //hasCollision();
+		    
+		    if (hasCollisionEnemy())
 		    {
 			    location.x -= Math.round(reverse * Math.cos(Math.toRadians(angle)));
 			    location.y -= Math.round(reverse * Math.sin(Math.toRadians(angle)));

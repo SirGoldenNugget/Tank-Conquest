@@ -44,7 +44,7 @@ public class Game extends JPanel implements Runnable
 
     protected static final Object SPRITE_LOCK = new Object();
     
-	private final int enemycount = 10;
+	private final int enemycount = 1;
 	
 	private Player player;
 	private List<Enemy> enemies = new ArrayList<Enemy>(enemycount);
@@ -264,7 +264,7 @@ public class Game extends JPanel implements Runnable
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		Graphics2D g2d = (Graphics2D) g;
+		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 
 		super.paintComponent(g2d);
