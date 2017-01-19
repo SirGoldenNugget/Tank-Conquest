@@ -1,6 +1,7 @@
 package org.minhvu.tankconquest;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -30,7 +31,7 @@ public class Healthbar
 		this.sprite = sprite;
 		this.name = name;
 		this.maxhealth = health;
-		this.health = this.maxhealth;
+		this.health = 100;
 		
 		healthbar = new RoundRectangle2D.Float(0, 0, 60, 14, 14, 14);
 		middlebar = new Rectangle2D.Float(0, 0, 46, 14);
@@ -41,12 +42,12 @@ public class Healthbar
 	public void paint(Graphics2D g2d)
 	{
 		healthbar.setFrame(new Point((int) (sprite.getLocation().x + (sprite.getDimensions().getWidth() - healthbar.getBounds().getSize().getWidth()) / 2), (int) (sprite.getLocation().y + sprite.getDimensions().getHeight() + 10)), healthbar.getBounds().getSize());
-
-		frontend.setFrame(healthbar.getBounds().getLocation(), frontend.getBounds().getSize());
-		middlebar.setFrame(new Point((int) (frontend.getX() + frontend.getBounds().getSize().width / 2) - 12, (int) (frontend.getY())), middlebar.getBounds().getSize());
-		backend.setFrame(new Point((int) (middlebar.getX() + middlebar.getWidth() - 7 /* TODO ADJUST */), (int) (middlebar.getY())), backend.getBounds().getSize());
 		
-		g2d.setColor(Color.BLACK);
+		frontend.setFrame(healthbar.getBounds().getLocation(), frontend.getBounds().getSize());
+		middlebar.setFrame(new Point((int) (frontend.getX() + frontend.getBounds().getSize().width / 2), (int) (frontend.getY())), new Dimension((int) ((double) (health) / (double) (maxhealth) * 46), (int) (middlebar.getBounds().getHeight())));
+		backend.setFrame(new Point((int) (middlebar.getX() + middlebar.getWidth() - backend.getWidth() / 2), (int) (middlebar.getY())), backend.getBounds().getSize());
+
+		g2d.setColor(Color.GRAY);
 		g2d.fill(healthbar);
 		g2d.draw(healthbar);
 		
@@ -76,6 +77,9 @@ public class Healthbar
 		g2d.draw(frontend);
 		g2d.fill(backend);
 		g2d.draw(backend);
+
+		g2d.setColor(Color.GRAY);
+		g2d.draw(healthbar);
 		
 		g2d.setFont(healthfont);
 		g2d.setColor(Color.BLACK);

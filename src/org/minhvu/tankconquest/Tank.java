@@ -2,9 +2,6 @@ package org.minhvu.tankconquest;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
-import java.awt.geom.GeneralPath;
 
 public abstract class Tank extends Sprite
 {
@@ -42,7 +39,7 @@ public abstract class Tank extends Sprite
 	
 	protected boolean hasCollision()
 	{
-		/*for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
+		for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
 		{
 			for (int j = 0; j < Game.getInstance().getMap().getMap()[i].length; ++j)
 			{	
@@ -53,7 +50,7 @@ public abstract class Tank extends Sprite
 			}
 		}
 
-		return false;*/
+		return false;
 		
 		/*for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
 		{
@@ -133,7 +130,7 @@ public abstract class Tank extends Sprite
 		
 		return false;*/
 		
-		for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
+		/*for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
 		{
 			for (int j = 0; j < Game.getInstance().getMap().getMap()[i].length; ++j)
 			{	
@@ -173,34 +170,13 @@ public abstract class Tank extends Sprite
 		            	
 		            	return true;
 		            }
-		            
-					/*Ellipse2D tile = new Ellipse2D.Float(j * 84, i * 84, 84, 84);
-					Ellipse2D tank = new Ellipse2D.Float(location.x, location.y, 84, 84);
-					
-					Area tilearea = new Area(tile);
-					Area tankarea = new Area(tank);
-					
-					tilearea.intersect(tankarea);
-					
-					if (!tilearea.isEmpty())
-					{
-						if (location.x + dimension.width > tile.getX() || location.x < tile.getX() + tile.getWidth())
-						{
-						    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
-						}
-						
-						if (location.y + dimension.height > tile.getY() || location.y < tile.getY() + tile.getHeight())
-						{
-						    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
-						}
-						
-						return true;
-					}*/
 				}
 			}
 		}
 
-		return false;
+		return false;*/
+		
+		
 	}
 	
 	protected boolean hasCollisionEnemy()
