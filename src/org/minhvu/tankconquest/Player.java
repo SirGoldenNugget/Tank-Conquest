@@ -2,7 +2,6 @@ package org.minhvu.tankconquest;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
@@ -55,14 +54,12 @@ public class Player extends Tank
 		
 		initialangle = 90;
 		angle = initialangle;
-		rotation = 1;
+		rotation = 2;
 	}
 	
 	@Override
 	public void move()
 	{
-		boolean collision = false;
-		
 		if (uppressed)
 		{
 			if (speed < forward && System.currentTimeMillis() - movementtimer > revspeed)
@@ -73,27 +70,10 @@ public class Player extends Tank
 			
 		    location.x -= Math.round(speed * Math.cos(Math.toRadians(angle)));
 		    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
-		    
-		    for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
-			{
-				if (getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()))
-				{
-					collision = true;
-				}
-			}
-		    
-		    for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
-			{
-				for (int j = 0; j < Game.getInstance().getMap().getMap()[i].length; ++j)
-				{
-					if (Game.getInstance().getMap().getMap()[i][j] != 0 && new Rectangle(j * 84, i * 84, 84, 84).intersects(getBounds()))
-					{
-						collision = true;
-					}
-				}
-			}
-		    
-		    if (collision)	
+			
+			hasCollision();
+
+		    if (/*hasCollision() || */hasCollisionEnemy())	
 		    {
 			    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
 			    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
@@ -114,26 +94,9 @@ public class Player extends Tank
 		    location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
 		    location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
 		    
-		    for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
-			{
-				if (getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()))
-				{
-					collision = true;
-				}
-			}
+		    //hasCollision();
 		    
-		    for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
-			{
-				for (int j = 0; j < Game.getInstance().getMap().getMap()[i].length; ++j)
-				{
-					if (Game.getInstance().getMap().getMap()[i][j] != 0 && new Rectangle(j * 84, i * 84, 84, 84).intersects(getBounds()))
-					{
-						collision = true;
-					}
-				}
-			}
-		    
-		    if (collision)
+		    if (hasCollisionEnemy())
 		    {
 			    location.x -= Math.round(reverse * Math.cos(Math.toRadians(angle)));
 			    location.y -= Math.round(reverse * Math.sin(Math.toRadians(angle)));
