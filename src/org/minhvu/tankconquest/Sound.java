@@ -1,7 +1,8 @@
 package org.minhvu.tankconquest;
 
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -16,15 +17,50 @@ public class Sound
 	public Clip EXPLOSION;
 	public Clip GAMEOVER;
 	
+	private InputStream inputstream;
+	private AudioInputStream audioinputstream;
+	
 	public Sound()
 	{
-		GAMEOVER = getAudioClip("res/gameover.wav");
-		FIRE = getAudioClip("res/fire.wav");
-		HIT = getAudioClip("res/hit.wav");
-		EXPLOSION = getAudioClip("res/explosion.wav");
+		GAMEOVER = getAudioClip("/gameover.wav");
+		FIRE = getAudioClip("/fire.wav");
+		HIT = getAudioClip("/hit.wav");
+		EXPLOSION = getAudioClip("/explosion.wav");
+		
+		
 	}
 	
 	private Clip getAudioClip(String path)
+	{
+		Clip clip = null;
+		
+		inputstream = getClass().getResourceAsStream(path);
+
+		try
+		{
+			audioinputstream = AudioSystem.getAudioInputStream(new BufferedInputStream(inputstream));
+
+			try
+			{
+				clip = AudioSystem.getClip();
+				clip.open(audioinputstream);
+			}
+
+			catch (LineUnavailableException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		catch (UnsupportedAudioFileException | IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return clip;
+	}
+	
+	/*private Clip getAudioClip(String path)
 	{
 		File file = new File(path);
 		Clip clip = null;
@@ -61,5 +97,5 @@ public class Sound
 		}
 		
 		return clip;
-	}
+	}*/
 }
