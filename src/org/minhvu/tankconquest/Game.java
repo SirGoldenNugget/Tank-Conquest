@@ -228,14 +228,12 @@ public class Game extends JPanel implements Runnable
 		{
 			if (state.equals(STATE.PLAY))
 			{
-				player.update();
 				player.move();
 				
 				for (int i = 0; i < enemies.size(); ++i)
 				{
-					enemies.get(i).update();
 					enemies.get(i).move();
-					//enemies.get(i).fire();
+					enemies.get(i).fire();
 				}
 				
 				for (int i = 0; i < bullets.size(); ++i)

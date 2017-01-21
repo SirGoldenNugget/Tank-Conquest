@@ -54,7 +54,37 @@ public abstract class Tank extends Sprite
 			}
 		}
 
+		for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
+		{
+			if (!Game.getInstance().getEnemies().get(i).equals(this) && Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
+			{
+				return true;
+			}
+		}
+		
+		if (this instanceof Enemy && getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
+		{
+			return true;
+		}
+		
 		return false;
+		
+		/*AffineTransform at = new AffineTransform();
+		
+		at.rotate(Math.toRadians(angle), getBounds().getCenterX(), getBounds().getCenterY());
+		Shape shape = at.createTransformedShape(getBounds());
+		
+		for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
+		{
+			for (int j = 0; j < Game.getInstance().getMap().getMap()[i].length; ++j)
+			{
+				if (Game.getInstance().getMap().getMap()[i][j] != 0 && shape.intersects(new Rectangle2D.Float(j * 84, i * 84, 84, 84)))
+				{
+					return true;
+				}
+			}
+		}*/
+
 		
 		/*List<Line2D> lines = new ArrayList<Line2D>();
 		lines.add(new Line2D.Float(84, 84 * 5, 84 * 3, 84 * 5));
@@ -83,16 +113,25 @@ public abstract class Tank extends Sprite
 		
 		return false;*/
 		
-		/*
-		List<Rectangle2D> tiles = new ArrayList<Rectangle2D>();
-		tiles.add(new Rectangle2D.Float(84, 84 * 5, 84 * 2, 84 * 2));*/
 		
-		/*for (int i = 0; i < tiles.size(); ++i)
+		/*List<Rectangle2D> tiles = new ArrayList<Rectangle2D>();
+		tiles.add(new Rectangle2D.Float(84, 84 * 5, 84 * 2, 84 * 2));
+		
+		for (int i = 0; i < tiles.size(); ++i)
 		{
 			Rectangle2D tile = tiles.get(i);
 			
 			if (tile.getBounds2D().intersects(getBounds().getBounds2D()))
 			{
+				if (Math.round(speed * Math.cos(Math.toRadians(angle))) > Math.round(speed * Math.sin(Math.toRadians(angle))))
+				{
+				    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
+				}
+				
+				else
+				{
+				    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
+				}
 				
 				if (location.x + dimension.width > tile.getX() || location.x < tile.getX() + tile.getWidth())
 				{
@@ -144,9 +183,9 @@ public abstract class Tank extends Sprite
 				    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
 				}
 			}
-		}*/
+		}
 		
-		//return false;
+		return false;*/
 		
 		/*for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
 		{
@@ -271,27 +310,12 @@ public abstract class Tank extends Sprite
 		}
 
 		return false;*/
-		
-		
-	}
-	
-	protected boolean hasCollisionEnemy()
-	{
-		for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
-		{
-			if (!Game.getInstance().getEnemies().get(i).equals(this) && Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
-			{
-				return true;
-			}
-		}
-		
-		return false;
 	}
 	
 	@Override
 	public Rectangle getBounds()
 	{
-		return new Rectangle(location.x + 10, location.y + 2, 64, 77);
+		return new Rectangle(location.x + 1, location.y + 1, 82, 82);
 	}
 	
 	public Healthbar getHealthbar()
@@ -302,19 +326,6 @@ public abstract class Tank extends Sprite
 	public int getDamage()
 	{
 		return damage;
-	}
-	
-	public void update()
-	{
-		if (angle < 0)
-		{
-			angle += 360;
-		}
-		
-		else if (angle >= 360)
-		{
-			angle -= 360;
-		}
 	}
 	
 	public abstract void move();

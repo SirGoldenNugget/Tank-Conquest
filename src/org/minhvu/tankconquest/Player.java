@@ -60,10 +60,6 @@ public class Player extends Tank
 	@Override
 	public void move()
 	{
-		//affinetransform.rotate(Math.toRadians(angle), getBounds().getCenterX(), getBounds().getCenterY());
-		
-		//Area a = new Area(getBounds());
-		
 		if (uppressed)
 		{
 			if (speed < forward && System.currentTimeMillis() - movementtimer > revspeed)
@@ -71,19 +67,23 @@ public class Player extends Tank
 				movementtimer = System.currentTimeMillis();
 				++speed;
 			}
+		    
+			location.x -= Math.round(speed * Math.cos(Math.toRadians(angle)));
 			
-			//a.transform(affinetransform);
+			if (hasCollision())
+			{
+				location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
+				
+				movementtimer = System.currentTimeMillis();
+				speed = reverse;
+			}
 			
-		    location.x -= Math.round(speed * Math.cos(Math.toRadians(angle)));
 		    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
 			
-			hasCollision();
-
-		    if (hasCollision() || hasCollisionEnemy())	
+		    if (hasCollision())
 		    {
-			    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
 			    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
-
+			    
 				movementtimer = System.currentTimeMillis();
 				speed = reverse;
 		    }
@@ -98,13 +98,16 @@ public class Player extends Tank
 		if (downpressed)
 		{
 		    location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
-		    location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
 		    
-		    //hasCollision();
-		    
-		    if (hasCollisionEnemy())
+		    if (hasCollision())
 		    {
 			    location.x -= Math.round(reverse * Math.cos(Math.toRadians(angle)));
+		    }
+		    
+		    location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
+		    
+		    if (hasCollision())
+		    {
 			    location.y -= Math.round(reverse * Math.sin(Math.toRadians(angle)));
 		    }
 		}

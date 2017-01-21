@@ -2,6 +2,7 @@ package org.minhvu.tankconquest;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -75,9 +76,15 @@ public class Enemy extends Tank
 		
 		for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
 		{
-			while (!Game.getInstance().getEnemies().get(i).equals(this) && Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
+			for (int j = 0; j < Game.getInstance().getMap().getMap().length; ++j)
 			{
-				location = new Point((int) (Math.random() * (1920 - dimension.width)), (int) (Math.random() * (1080 - dimension.height)));
+				for (int k = 0; k < Game.getInstance().getMap().getMap()[j].length; ++k)
+				{
+					while (!Game.getInstance().getEnemies().get(i).equals(this) && (Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()) || (Game.getInstance().getMap().getMap()[j][k] != 0 && Game.getInstance().getEnemies().get(i).getBounds().intersects(new Rectangle(k * 84, j * 84, 84, 84)))))
+					{
+						location = new Point((int) (Math.random() * (1920 - dimension.width)), (int) (Math.random() * (1080 - dimension.height)));
+					}
+				}
 			}
 		}
 		
@@ -97,11 +104,16 @@ public class Enemy extends Tank
 		if (direction)
 		{
 			location.x -= Math.round(forward * Math.cos(Math.toRadians(angle)));
-			location.y -= Math.round(forward * Math.sin(Math.toRadians(angle)));
 			
-			if (getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
+			if (hasCollision())
 			{
 				location.x += Math.round(forward * Math.cos(Math.toRadians(angle)));
+			}
+			
+			location.y -= Math.round(forward * Math.sin(Math.toRadians(angle)));
+			
+			if (hasCollision())
+			{
 				location.y += Math.round(forward * Math.sin(Math.toRadians(angle)));
 			}
 		}
@@ -109,46 +121,38 @@ public class Enemy extends Tank
 		else
 		{
 			location.x += Math.round(reverse * Math.cos(Math.toRadians(angle)));
-			location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
 			
-			if (getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
+			if (hasCollision())
 			{
 				location.x -= Math.round(reverse * Math.cos(Math.toRadians(angle)));
+			}
+			
+			location.y += Math.round(reverse * Math.sin(Math.toRadians(angle)));
+			
+			if (hasCollision())
+			{
 				location.y -= Math.round(reverse * Math.sin(Math.toRadians(angle)));
 			}
-		}
-		
-		if (hasCollision() || hasCollisionEnemy())
-		{
-			turn();
 		}
 		
 		if (getBounds().getCenterX() - dimension.width / 2 < 0)
 		{
 			location.x = 0;
-			
-			turn();
 		}
 		
 		if (getBounds().getCenterX() + dimension.width / 2 > Game.getInstance().getWidth())
 		{
 			location.x = Game.getInstance().getWidth() - dimension.width;
-			
-			turn();
 		}
 		
 		if (getBounds().getCenterY() - dimension.height / 2 < 0)
 		{
 			location.y = 0;
-			
-			turn();
 		}
 		
 		if (getBounds().getCenterY() + dimension.height / 2 > Game.getInstance().getHeight())
 		{
 			location.y = Game.getInstance().getHeight() - dimension.height;
-			
-			turn();
 		}
 		
 		if (turn)
