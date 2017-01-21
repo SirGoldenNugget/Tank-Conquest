@@ -147,7 +147,7 @@ public class Game extends JPanel implements Runnable
 		frame.setVisible(true);
 		
 		menu = new Menu();
-		map = new Map(Map.MAPS.FORGOTTEN_HERO);
+		map = new Map(Map.MAPS.FOUR_CORNERS);
 		end = new End();
 		sound = new Sound();
 		score = new Score();
@@ -228,10 +228,12 @@ public class Game extends JPanel implements Runnable
 		{
 			if (state.equals(STATE.PLAY))
 			{
+				player.update();
 				player.move();
 				
 				for (int i = 0; i < enemies.size(); ++i)
 				{
+					enemies.get(i).update();
 					enemies.get(i).move();
 					//enemies.get(i).fire();
 				}

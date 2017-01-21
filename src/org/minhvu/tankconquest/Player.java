@@ -37,7 +37,7 @@ public class Player extends Tank
 		
 		damage = 20;
 		
-		location = new Point(700, 700);
+		location = new Point(0, 0);
 		dimension = new Dimension(84, 84);
 		
 		forward = 5;
@@ -60,6 +60,10 @@ public class Player extends Tank
 	@Override
 	public void move()
 	{
+		//affinetransform.rotate(Math.toRadians(angle), getBounds().getCenterX(), getBounds().getCenterY());
+		
+		//Area a = new Area(getBounds());
+		
 		if (uppressed)
 		{
 			if (speed < forward && System.currentTimeMillis() - movementtimer > revspeed)
@@ -68,12 +72,14 @@ public class Player extends Tank
 				++speed;
 			}
 			
+			//a.transform(affinetransform);
+			
 		    location.x -= Math.round(speed * Math.cos(Math.toRadians(angle)));
 		    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
 			
 			hasCollision();
 
-		    if (/*hasCollision() || */hasCollisionEnemy())	
+		    if (hasCollision() || hasCollisionEnemy())	
 		    {
 			    location.x += Math.round(speed * Math.cos(Math.toRadians(angle)));
 			    location.y += Math.round(speed * Math.sin(Math.toRadians(angle)));
