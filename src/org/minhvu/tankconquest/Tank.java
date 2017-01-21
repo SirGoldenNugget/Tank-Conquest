@@ -2,13 +2,12 @@ package org.minhvu.tankconquest;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
 public abstract class Tank extends Sprite
 {
 	protected Animation movement;
 	protected Healthbar healthbar;
-	protected AffineTransform affinetransform;
 	
 	protected int damage;
 	
@@ -25,7 +24,7 @@ public abstract class Tank extends Sprite
 	
 	public Tank()
 	{
-		affinetransform = new AffineTransform();
+		super();
 		
 		movementtimer = System.currentTimeMillis();
 		bullettimer = System.currentTimeMillis();
@@ -39,17 +38,6 @@ public abstract class Tank extends Sprite
 		g2d.drawImage(movement.getSprite(), location.x, location.y, Game.getInstance());
 		g2d.rotate(Math.toRadians(-(angle - initialangle)), getBounds().getCenterX(), getBounds().getCenterY());
 		
-		
-		/*affinetransform.rotate(Math.toRadians(angle), getBounds().getCenterX(), getBounds().getCenterY());
-		
-		Area a = new Area(getBounds());
-		a.transform(affinetransform);
-		
-		g2d.draw(a.getBounds2D());
-		g2d.draw(this.getBounds());
-		//g2d.setTransform(affinetransform);
-		//g2d.drawImage(movement.getSprite(), location.x, location.y, Game.getInstance());
-		*/
 		healthbar.paint(g2d);
 	}
 	
@@ -58,8 +46,8 @@ public abstract class Tank extends Sprite
 		for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
 		{
 			for (int j = 0; j < Game.getInstance().getMap().getMap()[i].length; ++j)
-			{	
-				if (Game.getInstance().getMap().getMap()[i][j] != 0 && getBounds().intersects(new Rectangle(j * 84, i * 84, 84, 84)))
+			{
+				if (Game.getInstance().getMap().getMap()[i][j] != 0 && getBounds().intersects(new Rectangle2D.Float(j * 84, i * 84, 84, 84)))
 				{
 					return true;
 				}
