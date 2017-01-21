@@ -24,7 +24,7 @@ public class Game extends JPanel implements Runnable
 	
 	private static Game instance;
 
-	private boolean running = false;
+	private boolean running;
 	private Thread thread;
 	
 	public static enum STATE
@@ -44,7 +44,7 @@ public class Game extends JPanel implements Runnable
 
     protected static final Object SPRITE_LOCK = new Object();
     
-	private final int enemycount = 1;
+	private final int enemycount = 10;
 	
 	private Player player;
 	private List<Enemy> enemies = new ArrayList<Enemy>(enemycount);
@@ -147,7 +147,28 @@ public class Game extends JPanel implements Runnable
 		frame.setVisible(true);
 		
 		menu = new Menu();
-		map = new Map(Map.MAPS.FOUR_CORNERS);
+		
+		Map.MAPS maps = null;
+
+		switch ((int) (Math.random() * 4))
+		{
+			case 0:
+				maps = Map.MAPS.FOUR_CORNERS;
+				break;
+			case 1:
+				maps = Map.MAPS.ICE_AGE;
+				break;
+			case 2:
+				maps = Map.MAPS.FORGOTTEN_HERO;
+				break;
+			case 3:
+				maps = Map.MAPS.SQUAD_LIFE;
+				break;
+			default:
+				break;
+		}
+		
+		map = new Map(maps);
 		end = new End();
 		sound = new Sound();
 		score = new Score();

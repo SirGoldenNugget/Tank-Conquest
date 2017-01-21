@@ -4,22 +4,22 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 
 public class Menu
 {
-	private Rectangle playbutton;
-	private Rectangle helpbutton;
-	private Rectangle quitbutton;
-	private Rectangle backbutton;
+	private RoundRectangle2D playbutton;
+	private RoundRectangle2D helpbutton;
+	private RoundRectangle2D quitbutton;
+	private RoundRectangle2D backbutton;
 	
 	public Menu()
 	{
-		playbutton = new Rectangle((Game.getInstance().getWidth() - 600) / 2, 700, 600, 100);
-		helpbutton = new Rectangle((Game.getInstance().getWidth() - 600) / 2, 825, 600, 100);
-		quitbutton = new Rectangle((Game.getInstance().getWidth() - 600) / 2, 950, 600, 100);
-		backbutton = new Rectangle((Game.getInstance().getWidth() - 600) / 2, 950, 600, 100);
+		playbutton = new RoundRectangle2D.Float((Game.getInstance().getWidth() - 600) / 2, 700, 600, 100, 100, 100);
+		helpbutton = new RoundRectangle2D.Float((Game.getInstance().getWidth() - 600) / 2, 825, 600, 100, 100, 100);
+		quitbutton = new RoundRectangle2D.Float((Game.getInstance().getWidth() - 600) / 2, 950, 600, 100, 100, 100);
+		backbutton = new RoundRectangle2D.Float((Game.getInstance().getWidth() - 600) / 2, 950, 600, 100, 100, 100);
 	}
 	
 	public void paint(Graphics2D g2d)
@@ -44,19 +44,19 @@ public class Menu
 			g2d.fill(helpbutton);
 			g2d.fill(quitbutton);
 			
-			g2d.draw(playbutton);
+			/*g2d.draw(playbutton);
 			g2d.draw(helpbutton);
-			g2d.draw(quitbutton);
+			g2d.draw(quitbutton);*/
 			
 			g2d.setColor(Color.BLACK);
-			g2d.drawString("PLAY", playbutton.x + (playbutton.width - g2d.getFontMetrics().stringWidth("PLAY")) / 2, playbutton.y + 85);
-			g2d.drawString("HELP", helpbutton.x + (helpbutton.width - g2d.getFontMetrics().stringWidth("HELP")) / 2, helpbutton.y + 85);
-			g2d.drawString("QUIT", quitbutton.x + (quitbutton.width - g2d.getFontMetrics().stringWidth("QUIT")) / 2, quitbutton.y + 85);
+			g2d.drawString("PLAY", (int) playbutton.getFrame().getX() + ((int) playbutton.getFrame().getWidth() - g2d.getFontMetrics().stringWidth("PLAY")) / 2, (int) playbutton.getFrame().getY() + 85);
+			g2d.drawString("HELP", (int) helpbutton.getFrame().getX() + ((int) helpbutton.getFrame().getWidth() - g2d.getFontMetrics().stringWidth("HELP")) / 2, (int) helpbutton.getFrame().getY() + 85);
+			g2d.drawString("QUIT", (int) quitbutton.getFrame().getX() + ((int) quitbutton.getFrame().getWidth() - g2d.getFontMetrics().stringWidth("QUIT")) / 2, (int) quitbutton.getFrame().getY() + 85);
 		}
 		
 		else if (Game.getInstance().getState().equals(Game.STATE.HELP))
 		{
-			Font helpfont = new Font("calibri", Font.PLAIN, 20);
+			Font helpfont = new Font("calibri", Font.PLAIN, 40);
 			
 			String helptextad = "Movement: Arrow Keys To Move";
 			String helptextlr = "Space: Fires Bullet";
@@ -64,7 +64,7 @@ public class Menu
 			
 			g2d.setColor(Color.WHITE);
 			g2d.fill(backbutton);
-			g2d.draw(backbutton);
+			//g2d.draw(backbutton);
 
 			g2d.setFont(helpfont);
 			g2d.drawString(helptextad, (int) ((Game.getInstance().getWidth() - g2d.getFontMetrics().stringWidth(helptextad)) / 2), 750);
@@ -73,7 +73,7 @@ public class Menu
 
 			g2d.setFont(buttonfont);
 			g2d.setColor(Color.BLACK);
-			g2d.drawString("BACK", backbutton.x + (backbutton.width - g2d.getFontMetrics().stringWidth("BACK")) / 2, backbutton.y + 85);
+			g2d.drawString("BACK", (int) backbutton.getFrame().getX() + ((int) backbutton.getFrame().getWidth() - g2d.getFontMetrics().stringWidth("BACK")) / 2, (int) backbutton.getFrame().getY() + 85);
 		}
 	}
 	

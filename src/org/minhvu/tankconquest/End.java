@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 
 public class End
 {
@@ -13,8 +13,8 @@ public class End
 	Font textfont;
 	Font buttonfont;
 	
-	Rectangle playbutton;
-	Rectangle quitbutton;
+	RoundRectangle2D playbutton;
+	RoundRectangle2D quitbutton;
 	
 	public End()
 	{
@@ -22,8 +22,8 @@ public class End
 		textfont = new Font("calibri", Font.BOLD, 100);
 		buttonfont = new Font("calibri", Font.BOLD, 100);
 		
-		playbutton = new Rectangle(250, 700, 600, 100);
-		quitbutton = new Rectangle(Game.getInstance().getWidth() - 850, 700, 600, 100);
+		playbutton = new RoundRectangle2D.Float(250, 700, 600, 100, 100, 100);
+		quitbutton = new RoundRectangle2D.Float(Game.getInstance().getWidth() - 850, 700, 600, 100, 100, 100);
 	}
 	
 	public void paint(Graphics2D g2d)
@@ -45,8 +45,8 @@ public class End
 		g2d.draw(quitbutton);
 
 		g2d.setColor(Color.BLACK);
-		g2d.drawString("PLAY", playbutton.x + (playbutton.width - g2d.getFontMetrics().stringWidth("PLAY")) / 2, playbutton.y + 85);
-		g2d.drawString("QUIT", quitbutton.x + (quitbutton.width - g2d.getFontMetrics().stringWidth("QUIT")) / 2, quitbutton.y + 85);
+		g2d.drawString("PLAY", (int) playbutton.getFrame().getX() + ((int) playbutton.getFrame().getWidth() - g2d.getFontMetrics().stringWidth("PLAY")) / 2, (int) playbutton.getFrame().getY() + 85);
+		g2d.drawString("QUIT", (int) quitbutton.getFrame().getX() + ((int) quitbutton.getFrame().getWidth() - g2d.getFontMetrics().stringWidth("QUIT")) / 2, (int) quitbutton.getFrame().getY() + 85);
 	}
 	
 	public void mousePressed(MouseEvent e)

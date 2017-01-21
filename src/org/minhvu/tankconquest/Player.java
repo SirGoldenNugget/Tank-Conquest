@@ -112,26 +112,6 @@ public class Player extends Tank
 		    }
 		}
 		
-		if (getBounds().getCenterX() - dimension.width / 2 < 0)
-		{
-			location.x = 0;
-		}
-		
-		if (getBounds().getCenterX() + dimension.width / 2 > Game.getInstance().getWidth())
-		{
-			location.x = Game.getInstance().getWidth() - dimension.width;
-		}
-		
-		if (getBounds().getCenterY() - dimension.height / 2 < 0)
-		{
-			location.y = 0;
-		}
-		
-		if (getBounds().getCenterY() + dimension.height / 2 > Game.getInstance().getHeight())
-		{
-			location.y = Game.getInstance().getHeight() - dimension.height;
-		}
-		
 		if (leftpressed)
 		{
 			angle -= rotation;

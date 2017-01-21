@@ -2,10 +2,7 @@ package org.minhvu.tankconquest;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Enemy extends Tank
 {
@@ -24,7 +21,9 @@ public class Enemy extends Tank
 	private int rotate;
 
 	private boolean direction;
+	@SuppressWarnings("unused")
 	private int maxrotation;
+	@SuppressWarnings("unused")
 	private int minrotation;
 	
 	private boolean turn = false;
@@ -72,19 +71,13 @@ public class Enemy extends Tank
 		minrotation = 1000;
 
 		dimension = new Dimension(84, 84);
-		location = new Point((int) (Math.random() * (1920 - dimension.width)), (int) (Math.random() * (1080 - dimension.height)));
+		location = new Point(((int) (Math.random() * 23)) * 84, ((int) (Math.random() * 13)) * 84);
 		
 		for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
 		{
-			for (int j = 0; j < Game.getInstance().getMap().getMap().length; ++j)
+			while (hasCollision())
 			{
-				for (int k = 0; k < Game.getInstance().getMap().getMap()[j].length; ++k)
-				{
-					while (!Game.getInstance().getEnemies().get(i).equals(this) && (Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()) || (Game.getInstance().getMap().getMap()[j][k] != 0 && Game.getInstance().getEnemies().get(i).getBounds().intersects(new Rectangle(k * 84, j * 84, 84, 84)))))
-					{
-						location = new Point((int) (Math.random() * (1920 - dimension.width)), (int) (Math.random() * (1080 - dimension.height)));
-					}
-				}
+				location = new Point(((int) (Math.random() * 23)) * 84, ((int) (Math.random() * 13)) * 84);
 			}
 		}
 		
@@ -133,26 +126,6 @@ public class Enemy extends Tank
 			{
 				location.y -= Math.round(reverse * Math.sin(Math.toRadians(angle)));
 			}
-		}
-		
-		if (getBounds().getCenterX() - dimension.width / 2 < 0)
-		{
-			location.x = 0;
-		}
-		
-		if (getBounds().getCenterX() + dimension.width / 2 > Game.getInstance().getWidth())
-		{
-			location.x = Game.getInstance().getWidth() - dimension.width;
-		}
-		
-		if (getBounds().getCenterY() - dimension.height / 2 < 0)
-		{
-			location.y = 0;
-		}
-		
-		if (getBounds().getCenterY() + dimension.height / 2 > Game.getInstance().getHeight())
-		{
-			location.y = Game.getInstance().getHeight() - dimension.height;
 		}
 		
 		if (turn)
@@ -209,7 +182,7 @@ public class Enemy extends Tank
 		}
 	}
 	
-	private void turn()
+	/*private void turn()
 	{
 		direction = false;
 		rotate = 180;
@@ -222,7 +195,7 @@ public class Enemy extends Tank
 				direction = true;
 			}
 		}, (int) (Math.random() * (maxrotation - minrotation)) + minrotation);
-	}
+	}*/
 	
 	@Override
 	public void end()

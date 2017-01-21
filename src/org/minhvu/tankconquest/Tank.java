@@ -32,9 +32,7 @@ public abstract class Tank extends Sprite
 	
 	public void paint(Graphics2D g2d)
 	{
-		g2d.draw(this.getBounds());
 		g2d.rotate(Math.toRadians(angle - initialangle), getBounds().getCenterX(), getBounds().getCenterY());
-		g2d.draw(this.getBounds());
 		g2d.drawImage(movement.getSprite(), location.x, location.y, Game.getInstance());
 		g2d.rotate(Math.toRadians(-(angle - initialangle)), getBounds().getCenterX(), getBounds().getCenterY());
 		
@@ -65,6 +63,26 @@ public abstract class Tank extends Sprite
 		if (this instanceof Enemy && getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
 		{
 			return true;
+		}
+		
+		if (getBounds().getCenterX() - dimension.width / 2 < 0)
+		{
+			location.x = 0;
+		}
+		
+		if (getBounds().getCenterX() + dimension.width / 2 > Game.getInstance().getWidth())
+		{
+			location.x = Game.getInstance().getWidth() - dimension.width;
+		}
+		
+		if (getBounds().getCenterY() - dimension.height / 2 < 0)
+		{
+			location.y = 0;
+		}
+		
+		if (getBounds().getCenterY() + dimension.height / 2 > Game.getInstance().getHeight())
+		{
+			location.y = Game.getInstance().getHeight() - dimension.height;
 		}
 		
 		return false;
