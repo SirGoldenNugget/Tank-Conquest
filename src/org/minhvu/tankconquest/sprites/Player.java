@@ -5,8 +5,6 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JOptionPane;
-
 import org.minhvu.tankconquest.Game;
 import org.minhvu.tankconquest.sprites.essentials.Animation;
 import org.minhvu.tankconquest.sprites.essentials.Healthbar;
@@ -33,14 +31,14 @@ public class Player extends Tank
 	
 	private int revspeed;
 	
-	public Player()
+	public Player(String name)
 	{
 		super();
 		
 		movement = new Animation(moving, 10);
 		movement.start();
 		
-		healthbar = new Healthbar(this, JOptionPane.showInputDialog("Please Enter A Name:"), 100);
+		healthbar = new Healthbar(this, name, 100);
 		
 		damage = 20;
 		

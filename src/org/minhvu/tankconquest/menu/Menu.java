@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 
 import org.minhvu.tankconquest.Game;
-import org.minhvu.tankconquest.Game.STATE;
+import org.minhvu.tankconquest.Game.State;
 
 public class Menu
 {
@@ -40,7 +40,7 @@ public class Menu
 		Font buttonfont = new Font("calibri", Font.BOLD, 100);
 		g2d.setFont(buttonfont);
 		
-		if (Game.getInstance().getState().equals(Game.STATE.MENU))
+		if (Game.getInstance().getState().equals(Game.State.MENU))
 		{
 			g2d.setColor(Color.WHITE);
 			g2d.fill(playbutton);
@@ -57,7 +57,7 @@ public class Menu
 			g2d.drawString("QUIT", (int) quitbutton.getFrame().getX() + ((int) quitbutton.getFrame().getWidth() - g2d.getFontMetrics().stringWidth("QUIT")) / 2, (int) quitbutton.getFrame().getY() + 85);
 		}
 		
-		else if (Game.getInstance().getState().equals(Game.STATE.HELP))
+		else if (Game.getInstance().getState().equals(Game.State.HELP))
 		{
 			Font helpfont = new Font("calibri", Font.PLAIN, 40);
 			
@@ -84,16 +84,16 @@ public class Menu
 	{
 		Point location = new Point(e.getX(), e.getY());
 		
-		if (Game.getInstance().getState().equals(Game.STATE.MENU))
+		if (Game.getInstance().getState().equals(Game.State.MENU))
 		{
 			if (playbutton.contains(location))
 			{	
-				Game.getInstance().setState(Game.STATE.PLAY);
+				Game.getInstance().setState(Game.State.PLAY);
 			}
 			
 			else if (helpbutton.contains(location))
 			{
-				Game.getInstance().setState(Game.STATE.HELP);
+				Game.getInstance().setState(Game.State.HELP);
 			}
 			
 			else if (quitbutton.contains(location))
@@ -102,11 +102,11 @@ public class Menu
 			}
 		}
 		
-		else if (Game.getInstance().getState().equals(Game.STATE.HELP))
+		else if (Game.getInstance().getState().equals(Game.State.HELP))
 		{
 			if (backbutton.contains(location))
 			{
-				Game.getInstance().setState(Game.STATE.MENU);
+				Game.getInstance().setState(Game.State.MENU);
 			}
 		}
 	}

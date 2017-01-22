@@ -21,6 +21,7 @@ import org.minhvu.tankconquest.menu.End;
 import org.minhvu.tankconquest.menu.Menu;
 import org.minhvu.tankconquest.network.Client;
 import org.minhvu.tankconquest.network.Server;
+import org.minhvu.tankconquest.network.packets.Login;
 import org.minhvu.tankconquest.sprites.Bullet;
 import org.minhvu.tankconquest.sprites.Enemy;
 import org.minhvu.tankconquest.sprites.Explosion;
@@ -44,7 +45,7 @@ public class Game extends JPanel implements Runnable
 	private boolean running;
 	private Thread thread;
 	
-	public static enum STATE
+	public static enum State
 	{
 		MENU,
 		PLAY,
@@ -52,7 +53,7 @@ public class Game extends JPanel implements Runnable
 		END
 	};
 	
-	private STATE state;
+	private State state;
 	private Menu menu;
 	private Map map;
 	private Sound sound;
@@ -61,7 +62,7 @@ public class Game extends JPanel implements Runnable
 
     protected static final Object SPRITE_LOCK = new Object();
     
-	private final int enemycount = 10;
+	private final int enemycount = 0;
 	
 	private Player player;
 	private List<Enemy> enemies = new ArrayList<Enemy>(enemycount);
@@ -72,7 +73,7 @@ public class Game extends JPanel implements Runnable
 	{
 		instance = this;
 		
-		state = STATE.MENU;
+		state = State.MENU;
 		
 		KeyListener keylistener = new KeyListener()
 		{
@@ -85,7 +86,7 @@ public class Game extends JPanel implements Runnable
 			@Override
 			public void keyPressed(KeyEvent e)
 			{
-				if (state.equals(STATE.PLAY))
+				if (state.equals(State.PLAY))
 				{
 					player.keyPressed(e);
 				}
@@ -94,7 +95,7 @@ public class Game extends JPanel implements Runnable
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
-				if (state.equals(STATE.PLAY))
+				if (state.equals(State.PLAY))
 				{
 					player.keyReleased(e);
 				}
@@ -124,12 +125,12 @@ public class Game extends JPanel implements Runnable
 			@Override
 			public void mousePressed(MouseEvent e)
 			{
-				if (state.equals(STATE.MENU) || state.equals(STATE.HELP))
+				if (state.equals(State.MENU) || state.equals(State.HELP))
 				{
 					menu.mousePressed(e);
 				}
 				
-				if (state.equals(STATE.END))
+				if (state.equals(State.END))
 				{
 					end.mousePressed(e);
 				}
@@ -166,7 +167,7 @@ public class Game extends JPanel implements Runnable
 		
 		Map.MAPS maps = null;
 
-		switch ((int) (Math.random() * 4))
+		switch ((int) (Math.random() * 3))
 		{
 			case 0:
 				maps = Map.MAPS.FOUR_CORNERS;
@@ -177,9 +178,6 @@ public class Game extends JPanel implements Runnable
 			case 2:
 				maps = Map.MAPS.FORGOTTEN_HERO;
 				break;
-			case 3:
-				maps = Map.MAPS.SQUAD_LIFE;
-				break;
 			default:
 				break;
 		}
@@ -187,8 +185,8 @@ public class Game extends JPanel implements Runnable
 		map = new Map(maps);
 		end = new End();
 		sound = new Sound();
-		score = new Score();
-		player = new Player();
+		score = new Score();/*
+		player = new Player();*/
 		
 		for (int i = 0; i < enemycount; ++i)
 		{
@@ -196,6 +194,9 @@ public class Game extends JPanel implements Runnable
 		}
 		
 		start();
+		
+		Login loginpacket = new Login(JOptionPane.showInputDialog(this, "Please Enter A Name:"));
+		loginpacket.writeData(client);
 		
 		client.sendData("ping".getBytes());
 	}
@@ -274,7 +275,7 @@ public class Game extends JPanel implements Runnable
 		
 		synchronized (SPRITE_LOCK)
 		{
-			if (state.equals(STATE.PLAY))
+			if (state.equals(State.PLAY))
 			{
 				player.move();
 				
@@ -321,7 +322,7 @@ public class Game extends JPanel implements Runnable
 		{
 			map.paint(g2d);
 			
-			if (state.equals(STATE.PLAY) || state.equals(STATE.END))
+			if (state.equals(State.PLAY) || state.equals(State.END))
 			{
 					for (int i = 0; i < bullets.size(); ++i)
 					{
@@ -340,7 +341,7 @@ public class Game extends JPanel implements Runnable
 						explosions.get(i).paint(g2d);
 					}
 					
-					if (state.equals(STATE.END))
+					if (state.equals(State.END))
 					{
 						end.paint(g2d);
 					}
@@ -351,7 +352,7 @@ public class Game extends JPanel implements Runnable
 					}
 			}
 			
-			else if (state.equals(STATE.MENU) || state.equals(STATE.HELP))
+			else if (state.equals(State.MENU) || state.equals(State.HELP))
 			{
 				menu.paint(g2d);
 			}
@@ -365,15 +366,15 @@ public class Game extends JPanel implements Runnable
 		sound.GAMEOVER.stop();
 		sound.GAMEOVER.setFramePosition(0);
 		sound.GAMEOVER.start();
-		state = STATE.END;
+		state = State.END;
 	}
 	
 	public void restart()
 	{
-		state = STATE.PLAY;
+		state = State.PLAY;
 		
 		score = new Score();
-		player = new Player();
+		player = new Player("Hello");
 		
 		enemies.clear();
 		
@@ -391,12 +392,12 @@ public class Game extends JPanel implements Runnable
 		return instance;
 	}
 
-	public void setState(STATE state)
+	public void setState(State state)
 	{
 		this.state = state;
 	}
 	
-	public STATE getState()
+	public State getState()
 	{
 		return state;
 	}
@@ -419,6 +420,11 @@ public class Game extends JPanel implements Runnable
 	public Player getPlayer()
 	{
 		return player;
+	}
+	
+	public void setPlayer(Player player)
+	{
+		this.player = player;
 	}
 	
 	public List<Enemy> getEnemies()
