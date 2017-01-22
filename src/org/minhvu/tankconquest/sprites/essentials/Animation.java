@@ -1,8 +1,10 @@
-package org.minhvu.tankconquest;
+package org.minhvu.tankconquest.sprites.essentials;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.minhvu.tankconquest.Frame;
 
 public class Animation
 {

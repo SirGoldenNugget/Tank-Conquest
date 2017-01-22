@@ -1,4 +1,4 @@
-package org.minhvu.tankconquest;
+package org.minhvu.tankconquest.sprites.essentials;
 
 import java.awt.Color;
 import java.awt.Dimension;

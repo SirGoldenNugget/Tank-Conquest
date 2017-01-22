@@ -1,4 +1,4 @@
-package org.minhvu.tankconquest;
+package org.minhvu.tankconquest.level;
 
 import java.awt.Color;
 import java.awt.Font;

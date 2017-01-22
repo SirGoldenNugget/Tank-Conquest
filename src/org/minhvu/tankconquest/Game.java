@@ -14,6 +14,16 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.minhvu.tankconquest.level.Map;
+import org.minhvu.tankconquest.level.Score;
+import org.minhvu.tankconquest.menu.End;
+import org.minhvu.tankconquest.menu.Menu;
+import org.minhvu.tankconquest.sprites.Bullet;
+import org.minhvu.tankconquest.sprites.Enemy;
+import org.minhvu.tankconquest.sprites.Explosion;
+import org.minhvu.tankconquest.sprites.Player;
+import org.minhvu.tankconquest.sprites.essentials.Sprite;
+
 @SuppressWarnings("serial")
 public class Game extends JPanel implements Runnable
 {

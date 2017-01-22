@@ -1,9 +1,12 @@
-package org.minhvu.tankconquest;
+package org.minhvu.tankconquest.level;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+import org.minhvu.tankconquest.Game;
+import org.minhvu.tankconquest.sprites.essentials.Sprite;
 
 public class Map
 {

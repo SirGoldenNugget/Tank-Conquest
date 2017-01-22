@@ -1,4 +1,4 @@
-package org.minhvu.tankconquest;
+package org.minhvu.tankconquest.menu;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,6 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
+
+import org.minhvu.tankconquest.Game;
+import org.minhvu.tankconquest.Game.STATE;
 
 public class Menu
 {

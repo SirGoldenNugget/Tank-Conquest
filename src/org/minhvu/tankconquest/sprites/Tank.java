@@ -1,8 +1,13 @@
-package org.minhvu.tankconquest;
+package org.minhvu.tankconquest.sprites;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+
+import org.minhvu.tankconquest.Game;
+import org.minhvu.tankconquest.sprites.essentials.Animation;
+import org.minhvu.tankconquest.sprites.essentials.Healthbar;
+import org.minhvu.tankconquest.sprites.essentials.Sprite;
 
 public abstract class Tank extends Sprite
 {

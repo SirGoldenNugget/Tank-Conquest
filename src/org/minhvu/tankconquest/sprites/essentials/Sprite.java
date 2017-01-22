@@ -1,4 +1,4 @@
-package org.minhvu.tankconquest;
+package org.minhvu.tankconquest.sprites.essentials;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import org.minhvu.tankconquest.Game;
 
 public class Sprite
 {

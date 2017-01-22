@@ -1,8 +1,13 @@
-package org.minhvu.tankconquest;
+package org.minhvu.tankconquest.sprites;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+import org.minhvu.tankconquest.Game;
+import org.minhvu.tankconquest.sprites.essentials.Animation;
+import org.minhvu.tankconquest.sprites.essentials.Healthbar;
+import org.minhvu.tankconquest.sprites.essentials.Sprite;
 
 public class Enemy extends Tank
 {
