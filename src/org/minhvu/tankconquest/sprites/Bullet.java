@@ -57,73 +57,7 @@ public class Bullet extends Sprite
 		    location.y -= Math.round(speed * Math.sin(Math.toRadians(angle)));
 		}
 
-		if (sprite instanceof Player)
-		{	
-			for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
-			{
-				if (getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()))
-				{
-					exploded = true;
-					
-					Game.getInstance().getEnemies().get(i).getHealthbar().setHealth(Game.getInstance().getEnemies().get(i).getHealthbar().getHealth() - ((Tank) sprite).getDamage());
-					
-					if (Game.getInstance().getEnemies().get(i).getHealthbar().getHealth() <= 0)
-					{
-						Game.getInstance().getSound().EXPLOSION.stop();
-						Game.getInstance().getSound().EXPLOSION.setFramePosition(0);
-						Game.getInstance().getSound().EXPLOSION.start();
-						
-						Game.getInstance().getEnemies().get(i).end();
-					}
-					
-					else
-					{
-						Game.getInstance().getSound().HIT.stop();
-						Game.getInstance().getSound().HIT.setFramePosition(0);
-						Game.getInstance().getSound().HIT.start();
-					}
-				}
-			}
-		}
 		
-		else if (sprite instanceof Enemy)
-		{
-			/*-
-			for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
-			{
-				if (getBounds().intersects(Game.getInstance().getEnemies().get(i).getBounds()) && !Game.getInstance().getEnemies().get(i).equals(sprite))
-				{
-					exploded = true;
-					
-					Game.getInstance().getExplosions().add(new Explosion(Game.getInstance().getEnemies().get(i)));
-					Game.getInstance().getEnemies().remove(Game.getInstance().getEnemies().get(i));
-				}
-			}
-			*/
-			
-			if (getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
-			{
-				exploded = true;
-				
-				Game.getInstance().getPlayer().getHealthbar().setHealth(Game.getInstance().getPlayer().getHealthbar().getHealth() - ((Tank) sprite).getDamage());
-				
-				if (Game.getInstance().getPlayer().getHealthbar().getHealth() <= 0)
-				{
-					Game.getInstance().getSound().EXPLOSION.stop();
-					Game.getInstance().getSound().EXPLOSION.setFramePosition(0);
-					Game.getInstance().getSound().EXPLOSION.start();
-					
-					Game.getInstance().getPlayer().end();
-				}
-
-				else
-				{
-					Game.getInstance().getSound().HIT.stop();
-					Game.getInstance().getSound().HIT.setFramePosition(0);
-					Game.getInstance().getSound().HIT.start();
-				}
-			}
-		}
 		
 		for (int i = 0; i < Game.getInstance().getMap().getMap().length; ++i)
 		{
@@ -136,8 +70,7 @@ public class Bullet extends Sprite
 			}
 		}
 
-		if (location.x > Game.getInstance().getWidth() || location.x + dimension.width < 0
-				|| location.y > Game.getInstance().getHeight() || location.y + dimension.height < 0)
+		if (location.x > Game.getInstance().getWidth() || location.x + dimension.width < 0 || location.y > Game.getInstance().getHeight() || location.y + dimension.height < 0)
 		{
 			exploded = true;
 		}

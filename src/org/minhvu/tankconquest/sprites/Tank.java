@@ -56,19 +56,6 @@ public abstract class Tank extends Sprite
 				}
 			}
 		}
-
-		for (int i = 0; i < Game.getInstance().getEnemies().size(); ++i)
-		{
-			if (!Game.getInstance().getEnemies().get(i).equals(this) && Game.getInstance().getEnemies().get(i).getBounds().intersects(getBounds()))
-			{
-				return true;
-			}
-		}
-		
-		if (this instanceof Enemy && getBounds().intersects(Game.getInstance().getPlayer().getBounds()))
-		{
-			return true;
-		}
 		
 		if (getBounds().getCenterX() - dimension.width / 2 < 0)
 		{

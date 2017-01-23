@@ -22,7 +22,6 @@ import org.minhvu.tankconquest.menu.Menu;
 import org.minhvu.tankconquest.network.Client;
 import org.minhvu.tankconquest.network.Server;
 import org.minhvu.tankconquest.sprites.Bullet;
-import org.minhvu.tankconquest.sprites.Enemy;
 import org.minhvu.tankconquest.sprites.Explosion;
 import org.minhvu.tankconquest.sprites.Player;
 import org.minhvu.tankconquest.sprites.essentials.Sprite;
@@ -64,7 +63,6 @@ public class Game extends JPanel implements Runnable
 	private final int enemycount = 10;
 	
 	private Player player;
-	private List<Enemy> enemies = new ArrayList<Enemy>(enemycount);
 	private List<Bullet> bullets = new ArrayList<Bullet>();
 	private List<Explosion> explosions = new ArrayList<Explosion>();
 	
@@ -190,11 +188,6 @@ public class Game extends JPanel implements Runnable
 		score = new Score();
 		player = new Player();
 		
-		for (int i = 0; i < enemycount; ++i)
-		{
-			enemies.add(new Enemy());
-		}
-		
 		start();
 		
 		client.sendData("ping".getBytes());
@@ -278,12 +271,6 @@ public class Game extends JPanel implements Runnable
 			{
 				player.move();
 				
-				for (int i = 0; i < enemies.size(); ++i)
-				{
-					enemies.get(i).move();
-					enemies.get(i).fire();
-				}
-				
 				for (int i = 0; i < bullets.size(); ++i)
 				{
 					bullets.get(i).move();
@@ -326,11 +313,6 @@ public class Game extends JPanel implements Runnable
 					for (int i = 0; i < bullets.size(); ++i)
 					{
 						bullets.get(i).paint(g2d);
-					}
-
-					for (int i = 0; i < enemies.size(); ++i)
-					{
-						enemies.get(i).paint(g2d);
 					}
 					
 					player.paint(g2d);
@@ -375,13 +357,6 @@ public class Game extends JPanel implements Runnable
 		score = new Score();
 		player = new Player();
 		
-		enemies.clear();
-		
-		for (int i = 0; i < enemycount; ++i)
-		{
-			enemies.add(new Enemy());
-		}
-		
 		bullets.clear();
 		explosions.clear();
 	}
@@ -419,11 +394,6 @@ public class Game extends JPanel implements Runnable
 	public Player getPlayer()
 	{
 		return player;
-	}
-	
-	public List<Enemy> getEnemies()
-	{
-		return enemies;
 	}
 	
 	public List<Bullet> getBullets()
