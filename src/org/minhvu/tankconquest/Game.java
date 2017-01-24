@@ -12,15 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.minhvu.tankconquest.level.Map;
 import org.minhvu.tankconquest.level.Score;
 import org.minhvu.tankconquest.menu.End;
 import org.minhvu.tankconquest.menu.Menu;
-import org.minhvu.tankconquest.network.Client;
-import org.minhvu.tankconquest.network.Server;
 import org.minhvu.tankconquest.sprites.Bullet;
 import org.minhvu.tankconquest.sprites.Explosion;
 import org.minhvu.tankconquest.sprites.Player;
@@ -36,9 +33,6 @@ public class Game extends JPanel implements Runnable
 	}
 	
 	private static Game instance;
-	
-	private Client client;
-	private Server server;
 
 	private boolean running;
 	private Thread thread;
@@ -63,6 +57,7 @@ public class Game extends JPanel implements Runnable
 	private final int enemycount = 10;
 	
 	private Player player;
+	private List<Player> players = new ArrayList<Player>();
 	private List<Bullet> bullets = new ArrayList<Bullet>();
 	private List<Explosion> explosions = new ArrayList<Explosion>();
 	
@@ -188,9 +183,12 @@ public class Game extends JPanel implements Runnable
 		score = new Score();
 		player = new Player();
 		
-		start();
+		/*for (int i = 0; i < players.size(); ++i)
+		{
+			players.add(new Player());
+		}*/
 		
-		client.sendData("ping".getBytes());
+		start();
 	}
 	
 	private synchronized void start()
@@ -201,15 +199,6 @@ public class Game extends JPanel implements Runnable
 		}
 		
 		running = true;
-		
-		if (JOptionPane.showConfirmDialog(this, "Do You Want To Run The Server?") == 0)
-		{
-			server = new Server();
-			server.start();
-		}
-		
-		client = new Client("localhost");
-		client.start();
 		
 		thread = new Thread(this);
 		thread.start();

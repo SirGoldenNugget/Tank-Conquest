@@ -5,10 +5,20 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.HashSet;
 
 public class Server extends Thread
 {
 	private DatagramSocket socket;
+	
+	private static final int port = 1331;
+	private static HashSet<String> players = new HashSet<String>();
+	
+	public static void main(String[] args)
+	{
+		Server server = new Server();
+		server.start();
+	}
 	
 	public Server()
 	{

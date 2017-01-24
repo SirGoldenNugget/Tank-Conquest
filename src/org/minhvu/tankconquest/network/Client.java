@@ -7,10 +7,21 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import javax.swing.JFrame;
+
+import org.minhvu.tankconquest.Game;
+
 public class Client extends Thread
 {
+	private JFrame frame = new JFrame("Tic Tac Toe");
+	
 	private InetAddress address;
 	private DatagramSocket socket;
+	
+	public static void main(String[] args)
+	{
+		Game game = new Game();
+	}
 	
 	public Client(String address)
 	{
@@ -33,6 +44,8 @@ public class Client extends Thread
 		{
 			e.printStackTrace();
 		}
+		
+		start();
 	}
 	
 	@Override
@@ -54,6 +67,7 @@ public class Client extends Thread
 				e.printStackTrace();
 			}
 			
+			sendData("ping".getBytes());
 			System.out.println("Server > " + new String(packet.getData()));
 		}
 	}
